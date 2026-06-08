@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events · Northgate Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="bg-aura"></div>
+  <div class="bg-grid"></div>
+  <div id="nav-mount" data-active="events.html"></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <span class="eyebrow reveal in"><span class="dot"></span> June 2026</span>
+      <h1 class="reveal in">Events &amp; <span class="grad">Calendar</span></h1>
+      <p class="reveal in">Workshops, exams, clubs and celebrations — everything happening on campus this month.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:30px">
+    <div class="container">
+      <div class="event-grid">
+        <div>
+          <div class="section-head left reveal" style="margin-bottom:28px">
+            <h2 style="font-size:1.6rem">Upcoming this month</h2>
+          </div>
+          <div class="timeline" id="timeline"><!-- injected --></div>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:20px">
+          <div class="card cal reveal">
+            <div class="cal-head">
+              <h4>June 2026</h4>
+              <span style="color:var(--text-dim);font-size:.85rem">● has event</span>
+            </div>
+            <div class="cal-grid" id="cal"><!-- injected --></div>
+          </div>
+          <div class="card side-card reveal">
+            <h4>🎟️ Quick RSVP</h4>
+            <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:14px">Reserve your spot at the next event.</p>
+            <form id="rsvp-form" class="field" style="margin:0">
+              <select style="margin-bottom:10px" id="rsvp-event">
+                <option>Science Fair Sign-up Deadline</option>
+                <option>University &amp; Careers Evening</option>
+                <option>Spring Arts Showcase</option>
+                <option>Exam Revision Workshop</option>
+              </select>
+              <button class="btn btn-primary" style="width:100%" type="submit">Reserve my spot</button>
+            </form>
+          </div>
+          <div class="card side-card reveal">
+            <h4>🧭 Clubs this week</h4>
+            <div class="side-list">
+              <div class="si"><span class="ic">♟️</span><div><div class="t">Chess Club</div><div class="s">Mon · Room 14 · 3:30pm</div></div></div>
+              <div class="si"><span class="ic">🤖</span><div><div class="t">Robotics</div><div class="s">Wed · Tech Lab · 4:00pm</div></div></div>
+              <div class="si"><span class="ic">🎭</span><div><div class="t">Drama Society</div><div class="s">Thu · Theatre · 3:45pm</div></div></div>
+              <div class="si"><span class="ic">🌱</span><div><div class="t">Eco Warriors</div><div class="s">Fri · Garden · 1:00pm</div></div></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="assets/js/main.js"></script>
+  <script>
+    const events = [
+      { day:11, time:'Tue · 8:30am', cat:'academic', title:'Exam Revision Workshop', desc:'Subject teachers run drop-in sessions in the library. Bring your toughest topics.' },
+      { day:13, time:'Thu · 3:30pm', cat:'event', title:'Science Fair Sign-up Deadline', desc:'Last chance to register your project for the district showcase.' },
+      { day:16, time:'Mon · 9:00am', cat:'urgent', title:'Final Examinations Begin', desc:'Exams run through to June 25th. Check your personalised timetable.' },
+      { day:20, time:'Fri · 6:00pm', cat:'academic', title:'University &amp; Careers Evening', desc:'40+ universities and apprenticeship providers in the main hall.' },
+      { day:24, time:'Tue · 7:00pm', cat:'event', title:'Spring Arts Showcase', desc:'An evening of music, drama and visual art. Free tickets at the office.' },
+      { day:28, time:'Sat · 11:00am', cat:'event', title:'Class of 2026 Graduation 🎓', desc:'Celebrating our graduating seniors. RSVP closes June 20.' }
+    ];
+    const eventDays = events.map(e=>e.day);
+    const pillFor = c => c==='urgent'?'urgent':c==='event'?'event':'academic';
+
+    function renderTimeline(){
+      document.getElementById('timeline').innerHTML = events.map(e=>`
+        <div class="tl-item reveal in">
+          <div class="tl-time">June ${e.day} · ${e.time}</div>
+          <div class="card tl-card">
+            <span class="pill ${pillFor(e.cat)}">${e.cat==='urgent'?'Important':e.cat==='event'?'Event':'Academic'}</span>
+            <h3 style="margin-top:8px">${e.title}</h3>
+            <p>${e.desc}</p>
+          </div>
+        </div>`).join('');
+    }
+    function renderCal(){
+      const dows=['S','M','T','W','T','F','S'];
+      const firstDay=new Date(2026,5,1).getDay(); // June 2026
+      const days=30, today=8;
+      let html=dows.map(d=>`<div class="dow">${d}</div>`).join('');
+      for(let i=0;i<firstDay;i++) html+='<div class="cal-cell"></div>';
+      for(let d=1;d<=days;d++){
+        const has=eventDays.includes(d);
+        const ev=events.find(e=>e.day===d);
+        html+=`<div class="cal-cell ${has?'has-event':''} ${d===today?'today':''}" ${has?`data-ev="${ev.title}"`:''}>${d}</div>`;
+      }
+      const cal=document.getElementById('cal');
+      cal.innerHTML=html;
+      cal.querySelectorAll('[data-ev]').forEach(c=>c.onclick=()=>showToast('📅 '+c.dataset.ev));
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+      renderTimeline(); renderCal();
+      document.getElementById('rsvp-form').onsubmit=e=>{ e.preventDefault(); showToast('You\'re on the list! 🎉'); };
+    });
+  </script>
+</body>
+</html>

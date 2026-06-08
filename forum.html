@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q&amp;A Forum · Northgate Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="bg-aura"></div>
+  <div class="bg-grid"></div>
+  <div id="nav-mount" data-active="forum.html"></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <span class="eyebrow reveal in"><span class="dot"></span> Powered by students &amp; teachers</span>
+      <h1 class="reveal in">Q&amp;A <span class="grad">Forum</span></h1>
+      <p class="reveal in">Stuck on a problem? Ask the community. Know the answer? Help someone out.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:24px">
+    <div class="container">
+      <!-- stat row -->
+      <div class="stats-band reveal" style="grid-template-columns:repeat(3,1fr);margin-bottom:36px">
+        <div class="stat-box"><div class="num"><span id="stat-q">0</span></div><div class="lbl">Questions</div></div>
+        <div class="stat-box"><div class="num"><span id="stat-a">0</span></div><div class="lbl">Answers</div></div>
+        <div class="stat-box"><div class="num"><span id="stat-solved">0</span></div><div class="lbl">Solved</div></div>
+      </div>
+
+      <div class="forum-layout">
+        <div>
+          <!-- Ask box -->
+          <div class="card ask-box reveal">
+            <h3>✏️ Ask the community</h3>
+            <form id="ask-form">
+              <div class="field">
+                <label for="q-title">Your question</label>
+                <input type="text" id="q-title" placeholder="e.g. How do I factor a difference of squares?" required />
+              </div>
+              <div class="field">
+                <label for="q-detail">Add detail (optional)</label>
+                <textarea id="q-detail" rows="3" placeholder="Share what you've tried or where you're stuck..."></textarea>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <div class="field">
+                  <label for="q-subject">Subject</label>
+                  <select id="q-subject">
+                    <option>Mathematics</option>
+                    <option>Science</option>
+                    <option>English</option>
+                    <option>Humanities</option>
+                    <option>Languages</option>
+                    <option>Arts</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="display-name">Display name (optional)</label>
+                  <input type="text" id="display-name" placeholder="Anonymous Student" />
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit" style="width:100%">Post your question 🚀</button>
+            </form>
+          </div>
+
+          <!-- toolbar -->
+          <div class="toolbar reveal">
+            <div class="chips">
+              <div class="chip active" data-sort="votes">🔥 Top</div>
+              <div class="chip" data-sort="new">🆕 Newest</div>
+              <div class="chip" data-sort="unanswered">❓ Unanswered</div>
+            </div>
+            <div class="search-box">
+              <span class="si-ic">🔍</span>
+              <input type="text" id="forum-search" placeholder="Search questions..." />
+            </div>
+          </div>
+
+          <!-- subject filters -->
+          <div class="chips reveal" style="margin-bottom:22px">
+            <div class="chip active" data-filter="All">All</div>
+            <div class="chip" data-filter="Mathematics">Mathematics</div>
+            <div class="chip" data-filter="Science">Science</div>
+            <div class="chip" data-filter="English">English</div>
+            <div class="chip" data-filter="Humanities">Humanities</div>
+            <div class="chip" data-filter="Languages">Languages</div>
+            <div class="chip" data-filter="Arts">Arts</div>
+          </div>
+
+          <div class="q-list" id="q-list"><!-- injected --></div>
+        </div>
+
+        <!-- sidebar -->
+        <aside style="display:flex;flex-direction:column;gap:20px">
+          <div class="card side-card reveal">
+            <h4>🏆 Top helpers</h4>
+            <div class="side-list">
+              <div class="si"><span class="avatar">MO</span><div><div class="t">Mr. Okafor</div><div class="s">Chemistry · 312 answers</div></div></div>
+              <div class="si"><span class="avatar">AS</span><div><div class="t">Aarav S.</div><div class="s">Mathematics · 148 answers</div></div></div>
+              <div class="si"><span class="avatar">GB</span><div><div class="t">Ms. Bennett</div><div class="s">History · 121 answers</div></div></div>
+            </div>
+          </div>
+          <div class="card side-card reveal">
+            <h4>💡 How it works</h4>
+            <div class="side-list">
+              <div class="si"><span class="ic">1️⃣</span><div><div class="t">Ask clearly</div><div class="s">A good title gets faster answers.</div></div></div>
+              <div class="si"><span class="ic">2️⃣</span><div><div class="t">Upvote what helps</div><div class="s">Surface the best explanations.</div></div></div>
+              <div class="si"><span class="ic">3️⃣</span><div><div class="t">Pay it forward</div><div class="s">Answer one, learn twice.</div></div></div>
+            </div>
+          </div>
+          <div class="card side-card reveal" style="background:linear-gradient(135deg,rgba(47,107,255,.18),rgba(106,92,255,.12))">
+            <h4>🤝 Be kind</h4>
+            <p style="color:var(--text-muted);font-size:.9rem">This is a respectful space. No question is too small — we're all learning together.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/forum.js"></script>
+</body>
+</html>
