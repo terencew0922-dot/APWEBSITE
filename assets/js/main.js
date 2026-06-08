@@ -69,7 +69,7 @@ function navHTML(active) {
   <nav class="nav">
     <div class="container nav-inner">
       <a href="index.html" class="brand">
-        <span class="logo"><img src="assets/img/knox-mark.svg" alt="Knox Grammar crest" /></span>
+        <span class="logo"><img src="assets/img/knox-logo.svg" alt="Knox Grammar crest" /></span>
         <div><b>Knox Grammar School</b><span>Learning Hub</span></div>
       </a>
       <div class="nav-links">
@@ -93,7 +93,7 @@ function footerHTML() {
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="brand">
-            <span class="logo"><img src="assets/img/knox-mark.svg" alt="Knox Grammar crest" /></span>
+            <span class="logo"><img src="assets/img/knox-logo.svg" alt="Knox Grammar crest" /></span>
             <div><b>Knox Grammar School</b><span>Learning Hub</span></div>
           </a>
           <p>A community of curious young men learning boldly, asking freely, and growing together since 1924. Wahroonga, Sydney.</p>

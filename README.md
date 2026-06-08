@@ -36,7 +36,9 @@ python3 -m http.server 8000   # then visit http://localhost:8000
 ```
 
 ## Notes
-- The crest is an original **SVG recreation** of the Knox emblem (the pasted image wasn't a usable
-  file), so it's crisp at any size. Swap in the official artwork any time by replacing the two SVGs.
+- The crest is the **official Knox Grammar School logo** (`assets/img/knox-logo.svg`), a vector file
+  so it stays crisp at any size. It is shown on a light plaque on the home page and in a small white
+  chip in the nav/footer so its navy/black elements remain legible on the dark theme.
+- The home page is a minimal **title page** (crest + name + motto). All other pages carry the content.
 - This is a **concept/demo** site. Address (7 Woodville Avenue, Wahroonga) and founding year (1924)
-  are public facts; staff profiles and stats are illustrative placeholders — replace with official content.
+  are public facts; staff profiles and any figures are illustrative placeholders — replace with official content.
