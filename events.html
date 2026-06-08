@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Events · Northgate Academy</title>
+  <title>Events · Knox Grammar School</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/knox-mark.svg" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
@@ -44,21 +45,22 @@
             <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:14px">Reserve your spot at the next event.</p>
             <form id="rsvp-form" class="field" style="margin:0">
               <select style="margin-bottom:10px" id="rsvp-event">
-                <option>Science Fair Sign-up Deadline</option>
-                <option>University &amp; Careers Evening</option>
-                <option>Spring Arts Showcase</option>
-                <option>Exam Revision Workshop</option>
+                <option>Founder's Day &amp; Pipes &amp; Drums</option>
+                <option>Universities &amp; Careers Evening</option>
+                <option>Knox Music Soirée</option>
+                <option>Examination Revision Workshops</option>
               </select>
               <button class="btn btn-primary" style="width:100%" type="submit">Reserve my spot</button>
             </form>
           </div>
           <div class="card side-card reveal">
-            <h4>🧭 Clubs this week</h4>
+            <h4>🧭 Co-curricular this week</h4>
             <div class="side-list">
-              <div class="si"><span class="ic">♟️</span><div><div class="t">Chess Club</div><div class="s">Mon · Room 14 · 3:30pm</div></div></div>
-              <div class="si"><span class="ic">🤖</span><div><div class="t">Robotics</div><div class="s">Wed · Tech Lab · 4:00pm</div></div></div>
-              <div class="si"><span class="ic">🎭</span><div><div class="t">Drama Society</div><div class="s">Thu · Theatre · 3:45pm</div></div></div>
-              <div class="si"><span class="ic">🌱</span><div><div class="t">Eco Warriors</div><div class="s">Fri · Garden · 1:00pm</div></div></div>
+              <div class="si"><span class="ic">🎻</span><div><div class="t">Pipes &amp; Drums</div><div class="s">Mon · Music School · 3:30pm</div></div></div>
+              <div class="si"><span class="ic">🏉</span><div><div class="t">Rugby Training</div><div class="s">Tue · Knox Oval · 3:45pm</div></div></div>
+              <div class="si"><span class="ic">🎖️</span><div><div class="t">Cadet Corps</div><div class="s">Wed · Parade Ground · 4:00pm</div></div></div>
+              <div class="si"><span class="ic">♟️</span><div><div class="t">Chess Club</div><div class="s">Thu · Macintyre Library · 3:30pm</div></div></div>
+              <div class="si"><span class="ic">🐝</span><div><div class="t">Debating</div><div class="s">Fri · Senior School · 1:00pm</div></div></div>
             </div>
           </div>
         </aside>
@@ -70,22 +72,24 @@
   <script src="assets/js/main.js"></script>
   <script>
     const events = [
-      { day:11, time:'Tue · 8:30am', cat:'academic', title:'Exam Revision Workshop', desc:'Subject teachers run drop-in sessions in the library. Bring your toughest topics.' },
-      { day:13, time:'Thu · 3:30pm', cat:'event', title:'Science Fair Sign-up Deadline', desc:'Last chance to register your project for the district showcase.' },
-      { day:16, time:'Mon · 9:00am', cat:'urgent', title:'Final Examinations Begin', desc:'Exams run through to June 25th. Check your personalised timetable.' },
-      { day:20, time:'Fri · 6:00pm', cat:'academic', title:'University &amp; Careers Evening', desc:'40+ universities and apprenticeship providers in the main hall.' },
-      { day:24, time:'Tue · 7:00pm', cat:'event', title:'Spring Arts Showcase', desc:'An evening of music, drama and visual art. Free tickets at the office.' },
-      { day:28, time:'Sat · 11:00am', cat:'event', title:'Class of 2026 Graduation 🎓', desc:'Celebrating our graduating seniors. RSVP closes June 20.' }
+      { day:11, time:'Tue · 8:30am', cat:'academic', title:'Examination Revision Workshops', desc:'Masters run drop-in sessions in the Macintyre Library. Bring your toughest topics.' },
+      { day:13, time:'Thu · 3:30pm', cat:'event', title:'Founder\'s Day Sign-up Deadline', desc:'Register for the centenary assembly and the Pipes &amp; Drums Highland march.' },
+      { day:16, time:'Mon · 9:00am', cat:'urgent', title:'Semester Examinations Begin', desc:'Exams run through to June 25th. Check your personalised timetable and venues.' },
+      { day:20, time:'Fri · 6:00pm', cat:'academic', title:'Universities &amp; Careers Evening', desc:'Leading universities and pathways providers in the Great Hall.' },
+      { day:22, time:'Sat · 2:00pm', cat:'sport', title:'1st XV Rugby vs Old Boys', desc:'Cheer on the Blue &amp; White at the Knox Oval. All families welcome.' },
+      { day:24, time:'Tue · 7:00pm', cat:'event', title:'Knox Music Soirée', desc:'An evening of orchestra, choir and pipe band in the Performing Arts Centre.' },
+      { day:28, time:'Sat · 11:00am', cat:'event', title:'Year 12 Valedictory 🎓', desc:'Farewelling the Class of 2026. RSVP closes June 20.' }
     ];
     const eventDays = events.map(e=>e.day);
-    const pillFor = c => c==='urgent'?'urgent':c==='event'?'event':'academic';
+    const pillFor = c => ['urgent','event','sport','academic'].includes(c)?c:'academic';
+    const labelFor = c => ({urgent:'Important',event:'Event',sport:'Sport',academic:'Academic'}[c]||'Academic');
 
     function renderTimeline(){
       document.getElementById('timeline').innerHTML = events.map(e=>`
         <div class="tl-item reveal in">
           <div class="tl-time">June ${e.day} · ${e.time}</div>
           <div class="card tl-card">
-            <span class="pill ${pillFor(e.cat)}">${e.cat==='urgent'?'Important':e.cat==='event'?'Event':'Academic'}</span>
+            <span class="pill ${pillFor(e.cat)}">${labelFor(e.cat)}</span>
             <h3 style="margin-top:8px">${e.title}</h3>
             <p>${e.desc}</p>
           </div>

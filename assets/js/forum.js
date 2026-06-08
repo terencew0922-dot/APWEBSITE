@@ -1,7 +1,7 @@
 /* ===== Q&A Forum — functional, persisted in localStorage ===== */
 
-const STORE_KEY = 'northgate_forum_v1';
-const VOTE_KEY = 'northgate_votes_v1';
+const STORE_KEY = 'knox_forum_v1';
+const VOTE_KEY = 'knox_votes_v1';
 
 const seedQuestions = [
   {

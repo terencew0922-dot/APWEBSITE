@@ -1,4 +1,4 @@
-/* ===== Northgate Academy — shared UI logic ===== */
+/* ===== Knox Grammar School — shared UI logic ===== */
 
 // Mobile nav toggle
 document.addEventListener('DOMContentLoaded', () => {
@@ -69,8 +69,8 @@ function navHTML(active) {
   <nav class="nav">
     <div class="container nav-inner">
       <a href="index.html" class="brand">
-        <span class="logo">N</span>
-        <div><b>Northgate Academy</b><span>Learning Hub</span></div>
+        <span class="logo"><img src="assets/img/knox-mark.svg" alt="Knox Grammar crest" /></span>
+        <div><b>Knox Grammar School</b><span>Learning Hub</span></div>
       </a>
       <div class="nav-links">
         ${link('index.html','Home')}
@@ -93,10 +93,11 @@ function footerHTML() {
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="brand">
-            <span class="logo">N</span>
-            <div><b>Northgate Academy</b><span>Learning Hub</span></div>
+            <span class="logo"><img src="assets/img/knox-mark.svg" alt="Knox Grammar crest" /></span>
+            <div><b>Knox Grammar School</b><span>Learning Hub</span></div>
           </a>
-          <p>Empowering every student to learn boldly, ask freely, and grow together. A connected campus for curious minds.</p>
+          <p>A community of curious young men learning boldly, asking freely, and growing together since 1924. Wahroonga, Sydney.</p>
+          <p class="motto">Virile Agitur — “Play the man.”</p>
         </div>
         <div>
           <h5>Learn</h5>
@@ -127,7 +128,7 @@ function footerHTML() {
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© ${new Date().getFullYear()} Northgate Academy. Crafted for curious minds.</span>
+        <span>© ${new Date().getFullYear()} Knox Grammar School · 7 Woodville Avenue, Wahroonga NSW 2076</span>
         <div class="socials">
           <a href="#" aria-label="Mail">✉️</a>
           <a href="#" aria-label="Community">💬</a>
