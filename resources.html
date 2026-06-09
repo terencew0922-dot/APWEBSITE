@@ -40,10 +40,6 @@
           <span class="pick-cap">Subject</span>
           <div class="tabs" id="subject-tabs"><!-- injected --></div>
         </div>
-        <div class="pick-row" id="level-row" hidden>
-          <span class="pick-cap">Mathematics level</span>
-          <div class="tabs" id="level-tabs"><!-- injected --></div>
-        </div>
       </div>
 
       <div class="res-meta" id="res-meta"></div>
@@ -70,7 +66,6 @@
     const typeColor = { 'Past Papers':'#2f6bff','Video Series':'#6a5cff','Revision Guide':'#38e1ff','Interactive':'#34e0a1','Notes':'#ffcf5c','Study Guide':'#2f6bff','Reading List':'#6a5cff','Atlas':'#38e1ff','Flashcards':'#34e0a1','Audio':'#ffcf5c','Tutorial':'#6a5cff','Templates':'#2f6bff','Toolkit':'#38e1ff' };
 
     const typeColorOf = t => typeColor[t] || '#7db1ff';
-    let selYear = 7, selSubject = 'all', selLevel = 'all';
 
     function cardHTML(r){
       return `
@@ -93,35 +88,35 @@
     const subjectsForYear = y => (window.KNOX_SUBJECTS_BY_YEAR && window.KNOX_SUBJECTS_BY_YEAR[y]) || [];
     const levelsForYear   = y => (window.KNOX_MATHS_LEVELS && window.KNOX_MATHS_LEVELS[y]) || [];
 
-    function tabHTML(items, dataAttr, activeVal){
-      return items.map(it => {
-        const val = typeof it === 'object' ? it.val : it;
-        const label = typeof it === 'object' ? it.label : it;
-        return `<button class="tab${val===activeVal?' active':''}" data-${dataAttr}="${val}">${label}</button>`;
-      }).join('');
+    let selYear = 7, selVal = 'all', currentItems = [];
+
+    // Build the subject tab list for a year, with Mathematics expanded into its
+    // streams (Core/da Vinci or Standard/Advanced/Extension) inline with the
+    // other subjects.
+    function subjectItems(y){
+      const items = [{ val:'all', label:'All subjects', subj:'all' }];
+      subjectsForYear(y).forEach(s => {
+        const levels = levelsForYear(y);
+        if (s === 'Mathematics' && levels.length){
+          levels.forEach(l => items.push({
+            val: 'Mathematics|' + l,
+            label: l.indexOf('Mathematics') === 0 ? l : 'Mathematics ' + l,
+            subj: 'Mathematics', level: l
+          }));
+        } else {
+          items.push({ val:s, label:s, subj:s });
+        }
+      });
+      return items;
     }
 
     function renderSubjectTabs(){
       const wrap = document.getElementById('subject-tabs');
-      const subs = subjectsForYear(selYear).map(s => ({ val:s, label:s }));
-      wrap.innerHTML = tabHTML([{val:'all',label:'All subjects'}, ...subs], 'subj', selSubject);
-      wrap.querySelectorAll('[data-subj]').forEach(b=>b.onclick=()=>{
-        selSubject = b.dataset.subj; selLevel = 'all';
-        wrap.querySelectorAll('[data-subj]').forEach(x=>x.classList.toggle('active', x===b));
-        renderLevelTabs(); renderResults();
-      });
-    }
-
-    function renderLevelTabs(){
-      const row = document.getElementById('level-row');
-      const wrap = document.getElementById('level-tabs');
-      const levels = levelsForYear(selYear);
-      if (selSubject !== 'Mathematics' || !levels.length){ row.hidden = true; wrap.innerHTML=''; return; }
-      row.hidden = false;
-      wrap.innerHTML = tabHTML([{val:'all',label:'All levels'}, ...levels.map(l=>({val:l,label:l}))], 'level', selLevel);
-      wrap.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{
-        selLevel = b.dataset.level;
-        wrap.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active', x===b));
+      currentItems = subjectItems(selYear);
+      wrap.innerHTML = currentItems.map(it => `<button class="tab${it.val===selVal?' active':''}" data-val="${it.val}">${it.label}</button>`).join('');
+      wrap.querySelectorAll('[data-val]').forEach(btn=>btn.onclick=()=>{
+        selVal = btn.dataset.val;
+        wrap.querySelectorAll('[data-val]').forEach(x=>x.classList.toggle('active', x===btn));
         renderResults();
       });
     }
@@ -129,15 +124,14 @@
     function renderResults(){
       const grid = document.getElementById('res-grid');
       const meta = document.getElementById('res-meta');
+      const item = currentItems.find(i=>i.val===selVal) || currentItems[0];
       const list = resources.filter(r =>
         r.year===selYear &&
-        (selSubject==='all' || r.subj===selSubject) &&
-        (selSubject!=='Mathematics' || selLevel==='all' || r.level===selLevel)
+        (item.subj==='all' || (r.subj===item.subj && (!item.level || r.level===item.level)))
       ).sort((a,b)=> a.subj.localeCompare(b.subj) || (a.level||'').localeCompare(b.level||'') || a.title.localeCompare(b.title));
 
       const crumbs = ['Year '+selYear];
-      if (selSubject!=='all') crumbs.push(selSubject);
-      if (selSubject==='Mathematics' && selLevel!=='all') crumbs.push(selLevel);
+      if (item.val!=='all') crumbs.push(item.label);
       meta.innerHTML = `<span>${crumbs.join(' · ')}</span><span>${list.length} resource${list.length===1?'':'s'}</span>`;
       grid.innerHTML = list.length
         ? list.map(cardHTML).join('')
@@ -146,9 +140,9 @@
     }
 
     function selectYear(y){
-      selYear = y; selSubject = 'all'; selLevel = 'all';
+      selYear = y; selVal = 'all';
       document.querySelectorAll('#year-tabs [data-year]').forEach(x=>x.classList.toggle('active', parseInt(x.dataset.year,10)===y));
-      renderSubjectTabs(); renderLevelTabs(); renderResults();
+      renderSubjectTabs(); renderResults();
     }
 
     document.addEventListener('DOMContentLoaded', ()=>{
