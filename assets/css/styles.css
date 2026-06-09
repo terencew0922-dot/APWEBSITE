@@ -157,7 +157,24 @@ img { max-width: 100%; display: block; }
 .btn-sm { padding: 8px 15px; font-size: .85rem; }
 
 /* ===================== Title page (home, scroll-animated) ===================== */
-.title-hero { position: relative; height: 200vh; }
+.title-hero { position: relative; height: 175vh; }
+
+/* Year gate (home, below the title) */
+.year-gate { padding-top: 40px; }
+.year-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.year-card {
+  position: relative; display: flex; flex-direction: column; gap: 8px; overflow: hidden;
+  padding: 34px 30px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--surface); transition: transform .25s, border-color .25s, background .25s;
+}
+.year-card::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0; background: linear-gradient(90deg, var(--gold), transparent); transition: width .35s; }
+.year-card:hover { transform: translateY(-5px); border-color: var(--border-strong); background: linear-gradient(160deg, rgba(47,111,224,.14), var(--surface)); }
+.year-card:hover::before { width: 100%; }
+.year-card .yc-num { font-family: var(--serif-display); font-size: 3.2rem; font-weight: 600; line-height: 1; color: var(--gold-soft); }
+.year-card .yc-label { font-size: .82rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+.year-card .yc-go { position: absolute; top: 28px; right: 28px; color: var(--gold); opacity: 0; transform: translateX(-6px); transition: .25s; font-size: 1.1rem; }
+.year-card:hover .yc-go { opacity: 1; transform: none; }
+@media (max-width: 680px) { .year-grid { grid-template-columns: 1fr 1fr; } }
 .title-sticky {
   position: sticky; top: 78px; height: calc(100vh - 78px);
   display: grid; place-items: center; text-align: center; overflow: hidden;
