@@ -17,3 +17,14 @@ Replace with official Knox Grammar photography before any public launch.
 - **Legal Studies** — File:Courthouse Polk County Texas.jpg · https://commons.wikimedia.org/wiki/File:Courthouse_Polk_County_Texas.jpg
 - **Modern History** — File:Berlinermauer.jpg · https://commons.wikimedia.org/wiki/File:Berlinermauer.jpg
 - **Physics** — File:Carina Nebula.jpg · https://commons.wikimedia.org/wiki/File:Carina_Nebula.jpg
+
+## Stream-specific images (Mathematics & English)
+- math-standard2 — Texas Instruments calculator (Commons)
+- math-advanced — Woman teaching geometry (Euclid manuscript, Commons)
+- math-ext1 — Enrico Fermi at the blackboard (Commons)
+- math-ext2 — Mandelbrot set (Commons)
+- math-davinci — The Vitruvian Man, Leonardo da Vinci (Commons, public domain)
+- eng-standard — Paperback book (Commons)
+- eng-advanced — Antique books (Commons)
+- eng-ext1 — Vintage typewriter (Commons)
+- eng-ext2 — Fountain pen writing (Commons)

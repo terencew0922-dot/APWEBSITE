@@ -36,7 +36,31 @@
     default: svg('<path d="M15 9h12l8 8v22H15Z"/><path d="M27 9v8h8M20 25h8M20 31h8"/>')
   };
 
-  window.KNOX_ICON = function (subject) {
+  // Per-stream "tier" icons (ascending difficulty: foothill -> summit + star)
+  const LEVEL_ICONS = {
+    standard1: svg('<path d="M7 37h34"/><path d="M15 37l9-12 9 12"/>'),
+    standard2: svg('<path d="M7 37h34"/><path d="M11 37l7-9 7 9"/><path d="M25 37l8-12 8 12"/>'),
+    advanced:  svg('<path d="M7 37h34"/><path d="M10 37l9-16 6 8 4-5 5 13"/><path d="M16 26l3-3 2 2"/>'),
+    ext1:      svg('<path d="M7 37h34"/><path d="M12 37l12-19 12 19"/><path d="M24 18v-9M24 9h7l-2 2.5L31 14h-7"/>'),
+    ext2:      svg('<path d="M7 37h34"/><path d="M9 37l10-15 6 8 3-4 5 11"/>', '<path d="M34 6l1.5 3.1 3.4.5-2.5 2.4.6 3.4L34 13.2 30.9 14.8l.6-3.4-2.5-2.4 3.4-.5z" fill="currentColor" stroke="none"/>'),
+    core:      svg('<rect x="11" y="22" width="26" height="14" rx="2"/><path d="M11 29h26M18 22v14M30 22v14"/>'),
+    davinci:   svg('<path d="M24 8l4.2 9.3L38 18l-7 6.2L33 34l-9-5-9 5 2-9.8L10 18l9.8-.7z"/>')
+  };
+  function tierKey(level){
+    if (!level) return null;
+    if (level === 'Core') return 'core';
+    if (level === 'da Vinci') return 'davinci';
+    if (level.indexOf('Extension 2') >= 0) return 'ext2';
+    if (level.indexOf('Extension 1') >= 0) return 'ext1';
+    if (level.indexOf('Advanced')    >= 0) return 'advanced';
+    if (level.indexOf('Standard 2')  >= 0) return 'standard2';
+    if (level.indexOf('Standard')    >= 0) return 'standard1';
+    return null;
+  }
+
+  window.KNOX_ICON = function (subject, level) {
+    const t = tierKey(level);
+    if (t && LEVEL_ICONS[t]) return LEVEL_ICONS[t];
     if (!subject) return ICONS.default;
     if (subject.indexOf('Mathematics') === 0) return ICONS.Mathematics;
     return ICONS[subject] || ICONS.default;
@@ -48,8 +72,24 @@
     'Business Studies':'business-studies','Chemistry':'chemistry','Economics':'economics',
     'Legal Studies':'legal-studies','Modern History':'modern-history','Physics':'physics'
   };
-  window.KNOX_PHOTO = function (subject) {
+  // Stream-specific photos (fall back to the subject photo if not listed)
+  const STREAM_PHOTO = {
+    'Mathematics|Standard 2':'math-standard2',
+    'Mathematics|Mathematics Advanced':'math-advanced',
+    'Mathematics|Mathematics Extension 1':'math-ext1',
+    'Mathematics|Mathematics Extension 2':'math-ext2',
+    'Mathematics|da Vinci':'math-davinci',
+    'English|Standard':'eng-standard',
+    'English|Advanced':'eng-advanced',
+    'English|Extension 1':'eng-ext1',
+    'English|Extension 2':'eng-ext2'
+  };
+  window.KNOX_PHOTO = function (subject, level) {
     if (!subject) return null;
+    if (level) {
+      const sk = STREAM_PHOTO[subject + '|' + level];
+      if (sk) return 'assets/img/subjects/' + sk + '.jpg';
+    }
     const key = subject.indexOf('Mathematics') === 0 ? 'mathematics' : PHOTO_KEY[subject];
     return key ? 'assets/img/subjects/' + key + '.jpg' : null;
   };

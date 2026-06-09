@@ -68,8 +68,8 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       document.title = label + ' · Knox Grammar School';
-      document.getElementById('subject-emblem').innerHTML = window.KNOX_ICON(subj);
-      const photo = window.KNOX_PHOTO(subj);
+      document.getElementById('subject-emblem').innerHTML = window.KNOX_ICON(subj, level);
+      const photo = window.KNOX_PHOTO(subj, level);
       if (photo) {
         const ph = document.getElementById('subject-photo');
         const img = new Image();
