@@ -14,7 +14,8 @@ thistle, and the *Virile Agitur* motto banner).
 |------|---------|
 | `index.html` | Home — crest hero, feature overview, stats, latest announcements |
 | `forum.html` | **Q&A Forum** — ask questions, post answers, upvote (saved in your browser via localStorage) |
-| `resources.html` | **Resource Library** — filterable notes, past papers, videos by subject |
+| `subjects.html` | **Subject picker** — a year's subjects shown as graphic cards (`?year=N`) |
+| `subject.html` | **Subject page** — materials/resources for one subject (`?year=N&subject=X`) |
 | `announcements.html` | **Announcements** — filterable school news feed |
 | `events.html` | **Events** — timeline + interactive calendar + co-curricular + RSVP |
 | `about.html` | About / ethos / values / leadership / contact |

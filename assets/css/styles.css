@@ -605,3 +605,56 @@ img { max-width: 100%; display: block; }
 .foot-contact { color: var(--text-dim); }
 /* value cards read as editorial type, no icon */
 .feature-card h3 { margin-top: 2px; }
+
+/* ===================== Subject pages (grid + materials + transitions) ===================== */
+@keyframes pageRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes cardIn   { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.page-enter .page-hero, .page-enter .subject-hero { animation: pageRise .6s cubic-bezier(.2,.7,.3,1) both; }
+body.page-leave { opacity: 0; transition: opacity .36s ease; }
+
+.subject-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 900px) { .subject-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .subject-grid { grid-template-columns: 1fr; } }
+
+.subject-card {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+  padding: 26px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface);
+  overflow: hidden; color: inherit;
+  transition: transform .25s, border-color .25s, background .25s, box-shadow .25s, opacity .25s;
+  animation: cardIn .5s cubic-bezier(.2,.7,.3,1) both; animation-delay: calc(var(--i, 0) * 55ms);
+}
+.subject-card::after {
+  content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .3s; pointer-events: none;
+  background: repeating-linear-gradient(45deg, rgba(201,168,92,.06) 0 1px, transparent 1px 16px),
+              repeating-linear-gradient(-45deg, rgba(201,168,92,.06) 0 1px, transparent 1px 16px);
+  mask-image: radial-gradient(circle at 72% 18%, #000, transparent 75%);
+}
+.subject-card:hover { transform: translateY(-6px); border-color: var(--border-strong); background: linear-gradient(160deg, rgba(47,111,224,.14), var(--surface)); box-shadow: var(--shadow-lg); }
+.subject-card:hover::after { opacity: 1; }
+.subject-card.picked { transform: scale(1.05); border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), var(--shadow-lg); z-index: 2; }
+.subject-card.dim { opacity: .2; transform: scale(.97); }
+
+.sc-icon { width: 54px; height: 54px; color: var(--gold-soft); display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: 12px; background: rgba(201,168,92,.06); transition: .25s; }
+.sc-icon svg { width: 30px; height: 30px; }
+.subject-card:hover .sc-icon { color: var(--gold); transform: rotate(-5deg) scale(1.08); background: rgba(201,168,92,.12); }
+.sc-name { font-family: var(--serif-display); font-size: 1.22rem; font-weight: 600; line-height: 1.15; }
+.sc-count { font-size: .82rem; color: var(--text-dim); }
+.sc-go { position: absolute; top: 24px; right: 24px; color: var(--gold); opacity: 0; transform: translateX(-6px); transition: .25s; }
+.subject-card:hover .sc-go { opacity: 1; transform: none; }
+
+.subject-hero { padding: 70px 0 20px; }
+.subject-back { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: .9rem; margin-bottom: 24px; transition: .2s; }
+.subject-back:hover { color: var(--gold-soft); }
+.subject-head { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.subject-emblem { width: 78px; height: 78px; flex-shrink: 0; color: var(--gold); display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: 16px; background: rgba(201,168,92,.06); animation: cardIn .6s cubic-bezier(.2,.7,.3,1) both; }
+.subject-emblem svg { width: 44px; height: 44px; }
+.subject-head h1 { font-family: var(--serif-display); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 600; letter-spacing: -.5px; }
+.subject-head .eyebrow { margin-bottom: 10px; }
+.subject-head p { color: var(--text-muted); margin-top: 6px; }
+
+.res-grid .res-card { animation: cardIn .5s cubic-bezier(.2,.7,.3,1) both; animation-delay: calc(var(--i, 0) * 50ms); }
+
+@media (prefers-reduced-motion: reduce) {
+  .subject-card, .res-grid .res-card, .subject-emblem, .page-enter .page-hero, .page-enter .subject-hero { animation: none; }
+  body.page-leave { transition: none; }
+}

@@ -75,7 +75,7 @@ function navHTML(active) {
       <div class="nav-links">
         ${link('index.html','Home')}
         ${link('announcements.html','Announcements')}
-        ${link('resources.html','Resources')}
+        ${link('subjects.html','Resources')}
         ${link('forum.html','Q&amp;A Forum')}
         ${link('events.html','Events')}
         ${link('about.html','About')}
@@ -102,10 +102,10 @@ function footerHTML() {
         <div>
           <h5>Learn</h5>
           <ul>
-            <li><a href="resources.html">Resource Library</a></li>
+            <li><a href="subjects.html">Resource Library</a></li>
             <li><a href="forum.html">Q&amp;A Forum</a></li>
             <li><a href="events.html">Study Events</a></li>
-            <li><a href="resources.html">Past Papers</a></li>
+            <li><a href="subjects.html?year=12">Past Papers</a></li>
           </ul>
         </div>
         <div>
@@ -123,7 +123,7 @@ function footerHTML() {
             <li><a href="forum.html">Ask a Teacher</a></li>
             <li><a href="about.html#contact">Wellbeing</a></li>
             <li><a href="about.html">Academic Help</a></li>
-            <li><a href="resources.html">Study Tips</a></li>
+            <li><a href="subjects.html">Study Tips</a></li>
           </ul>
         </div>
       </div>
