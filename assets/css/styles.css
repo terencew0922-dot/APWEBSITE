@@ -157,7 +157,7 @@ img { max-width: 100%; display: block; }
 .btn-sm { padding: 8px 15px; font-size: .85rem; }
 
 /* ===================== Title page (home, scroll-animated) ===================== */
-.title-hero { position: relative; height: 175vh; }
+.title-hero { position: relative; height: 135vh; }
 
 /* Year gate (home, below the title) */
 .year-gate { padding-top: 40px; }
@@ -251,13 +251,15 @@ img { max-width: 100%; display: block; }
 .hero-tagline .t-motto { font-family: var(--serif-display); font-style: italic; font-size: clamp(1.35rem, 2.4vw, 2rem); color: var(--gold-soft); }
 .hero-tagline .t-sub { font-size: .76rem; letter-spacing: 1.6px; text-transform: uppercase; color: var(--text-dim); }
 .hero-scroll {
-  position: absolute; left: 24px; top: 50%; transform: translateY(-50%) rotate(180deg);
-  writing-mode: vertical-rl; font-size: .64rem; letter-spacing: 4px; text-transform: uppercase;
-  color: var(--text-dim); z-index: 3; pointer-events: none;
+  position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  font-size: .66rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text-dim); z-index: 3; pointer-events: none; text-align: center;
 }
+.hero-scroll i { width: 16px; height: 16px; border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); transform: rotate(45deg); animation: cueBounce 1.6s ease-in-out infinite; }
+@keyframes cueBounce { 0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: .45; } 50% { transform: rotate(45deg) translate(3px, 3px); opacity: 1; } }
 @media (max-width: 680px) {
-  .hero-tagline { left: 26px; right: 26px; bottom: 13vh; }
-  .hero-scroll { display: none; }
+  .hero-tagline { left: 26px; right: 26px; bottom: 16vh; }
 }
 @media (max-width: 680px) { .title-hero { height: 165vh; } }
 @media (prefers-reduced-motion: reduce) {
