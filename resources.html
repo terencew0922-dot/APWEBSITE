@@ -25,22 +25,24 @@
   <section class="section" style="padding-top:30px">
     <div class="container">
       <div class="picker reveal">
-        <div class="pick-step" id="year-step">
-          <div class="pick-label"><b>1</b> Choose a year level</div>
-          <div class="pick-options" id="year-options">
-            <button class="pick-btn" data-year="7">Year 7</button>
-            <button class="pick-btn" data-year="8">Year 8</button>
-            <button class="pick-btn" data-year="9">Year 9</button>
-            <button class="pick-btn" data-year="10">Year 10</button>
-            <button class="pick-btn" data-year="11">Year 11</button>
-            <button class="pick-btn" data-year="12">Year 12</button>
+        <div class="pick-row">
+          <span class="pick-cap">Year</span>
+          <div class="tabs" id="year-tabs">
+            <button class="tab" data-year="7">Year 7</button>
+            <button class="tab" data-year="8">Year 8</button>
+            <button class="tab" data-year="9">Year 9</button>
+            <button class="tab" data-year="10">Year 10</button>
+            <button class="tab" data-year="11">Year 11</button>
+            <button class="tab" data-year="12">Year 12</button>
           </div>
         </div>
-        <div class="pick-step" id="subject-step" hidden>
-          <div class="pick-label"><b>2</b> Choose a subject
-            <button class="pick-reset" id="reset-year" type="button">⟲ Change year</button>
-          </div>
-          <div class="pick-options" id="subject-options"><!-- injected --></div>
+        <div class="pick-row">
+          <span class="pick-cap">Subject</span>
+          <div class="tabs" id="subject-tabs"><!-- injected --></div>
+        </div>
+        <div class="pick-row" id="level-row" hidden>
+          <span class="pick-cap">Mathematics level</span>
+          <div class="tabs" id="level-tabs"><!-- injected --></div>
         </div>
       </div>
 
@@ -68,7 +70,7 @@
     const typeColor = { 'Past Papers':'#2f6bff','Video Series':'#6a5cff','Revision Guide':'#38e1ff','Interactive':'#34e0a1','Notes':'#ffcf5c','Study Guide':'#2f6bff','Reading List':'#6a5cff','Atlas':'#38e1ff','Flashcards':'#34e0a1','Audio':'#ffcf5c','Tutorial':'#6a5cff','Templates':'#2f6bff','Toolkit':'#38e1ff' };
 
     const typeColorOf = t => typeColor[t] || '#7db1ff';
-    let selYear = null, selSubject = 'all';
+    let selYear = 7, selSubject = 'all', selLevel = 'all';
 
     function cardHTML(r){
       return `
@@ -88,66 +90,71 @@
         </article>`;
     }
 
-    function subjectsForYear(y){
-      return (window.KNOX_SUBJECTS_BY_YEAR && window.KNOX_SUBJECTS_BY_YEAR[y]) || [];
+    const subjectsForYear = y => (window.KNOX_SUBJECTS_BY_YEAR && window.KNOX_SUBJECTS_BY_YEAR[y]) || [];
+    const levelsForYear   = y => (window.KNOX_MATHS_LEVELS && window.KNOX_MATHS_LEVELS[y]) || [];
+
+    function tabHTML(items, dataAttr, activeVal){
+      return items.map(it => {
+        const val = typeof it === 'object' ? it.val : it;
+        const label = typeof it === 'object' ? it.label : it;
+        return `<button class="tab${val===activeVal?' active':''}" data-${dataAttr}="${val}">${label}</button>`;
+      }).join('');
     }
 
-    function renderSubjects(){
-      const wrap = document.getElementById('subject-options');
-      const subs = subjectsForYear(selYear);
-      wrap.innerHTML = `<button class="pick-btn active" data-subj="all">All subjects</button>` +
-        subs.map(s=>`<button class="pick-btn" data-subj="${s}">${s}</button>`).join('');
+    function renderSubjectTabs(){
+      const wrap = document.getElementById('subject-tabs');
+      const subs = subjectsForYear(selYear).map(s => ({ val:s, label:s }));
+      wrap.innerHTML = tabHTML([{val:'all',label:'All subjects'}, ...subs], 'subj', selSubject);
       wrap.querySelectorAll('[data-subj]').forEach(b=>b.onclick=()=>{
-        wrap.querySelectorAll('[data-subj]').forEach(x=>x.classList.remove('active'));
-        b.classList.add('active'); selSubject=b.dataset.subj; renderResults();
+        selSubject = b.dataset.subj; selLevel = 'all';
+        wrap.querySelectorAll('[data-subj]').forEach(x=>x.classList.toggle('active', x===b));
+        renderLevelTabs(); renderResults();
+      });
+    }
+
+    function renderLevelTabs(){
+      const row = document.getElementById('level-row');
+      const wrap = document.getElementById('level-tabs');
+      const levels = levelsForYear(selYear);
+      if (selSubject !== 'Mathematics' || !levels.length){ row.hidden = true; wrap.innerHTML=''; return; }
+      row.hidden = false;
+      wrap.innerHTML = tabHTML([{val:'all',label:'All levels'}, ...levels.map(l=>({val:l,label:l}))], 'level', selLevel);
+      wrap.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{
+        selLevel = b.dataset.level;
+        wrap.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active', x===b));
+        renderResults();
       });
     }
 
     function renderResults(){
       const grid = document.getElementById('res-grid');
       const meta = document.getElementById('res-meta');
-      if(selYear===null){
-        meta.textContent = '';
-        grid.innerHTML = '<div class="card empty-state" style="grid-column:1/-1"><h3>Pick a year level to begin</h3><p>Choose a year above, then narrow by subject.</p></div>';
-        return;
-      }
-      const list = resources
-        .filter(r=> r.year===selYear && (selSubject==='all' || r.subj===selSubject))
-        .sort((a,b)=> a.subj.localeCompare(b.subj) || a.title.localeCompare(b.title));
-      meta.innerHTML = `<span>Year ${selYear}${selSubject==='all'?'':' · '+selSubject}</span><span>${list.length} resource${list.length===1?'':'s'}</span>`;
+      const list = resources.filter(r =>
+        r.year===selYear &&
+        (selSubject==='all' || r.subj===selSubject) &&
+        (selSubject!=='Mathematics' || selLevel==='all' || r.level===selLevel)
+      ).sort((a,b)=> a.subj.localeCompare(b.subj) || (a.level||'').localeCompare(b.level||'') || a.title.localeCompare(b.title));
+
+      const crumbs = ['Year '+selYear];
+      if (selSubject!=='all') crumbs.push(selSubject);
+      if (selSubject==='Mathematics' && selLevel!=='all') crumbs.push(selLevel);
+      meta.innerHTML = `<span>${crumbs.join(' · ')}</span><span>${list.length} resource${list.length===1?'':'s'}</span>`;
       grid.innerHTML = list.length
         ? list.map(cardHTML).join('')
         : '<div class="card empty-state" style="grid-column:1/-1"><h3>Nothing here yet</h3><p>No resources for this selection.</p></div>';
       grid.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>showToast('Opening “'+b.dataset.open+'”'));
     }
 
-    document.addEventListener('DOMContentLoaded', ()=>{
-      renderResults();
-      document.querySelectorAll('#year-options [data-year]').forEach(b=>b.onclick=()=>{
-        document.querySelectorAll('#year-options [data-year]').forEach(x=>x.classList.remove('active'));
-        b.classList.add('active');
-        selYear = parseInt(b.dataset.year,10); selSubject = 'all';
-        document.getElementById('subject-step').hidden = false;
-        renderSubjects(); renderResults();
-      });
-      document.getElementById('reset-year').onclick=()=>{
-        selYear = null; selSubject = 'all';
-        document.querySelectorAll('#year-options [data-year]').forEach(x=>x.classList.remove('active'));
-        document.getElementById('year-step').hidden = false;
-        document.getElementById('subject-step').hidden = true;
-        renderResults();
-      };
+    function selectYear(y){
+      selYear = y; selSubject = 'all'; selLevel = 'all';
+      document.querySelectorAll('#year-tabs [data-year]').forEach(x=>x.classList.toggle('active', parseInt(x.dataset.year,10)===y));
+      renderSubjectTabs(); renderLevelTabs(); renderResults();
+    }
 
-      // If arriving from the home page with ?year=N, skip the year step and
-      // open straight at subject selection for that year.
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('#year-tabs [data-year]').forEach(b=>b.onclick=()=> selectYear(parseInt(b.dataset.year,10)));
       const qy = new URLSearchParams(location.search).get('year');
-      if (qy && /^(7|8|9|10|11|12)$/.test(qy)) {
-        const btn = document.querySelector('#year-options [data-year="'+qy+'"]');
-        if (btn) {
-          btn.click();
-          document.getElementById('year-step').hidden = true;
-        }
-      }
+      selectYear(qy && /^(7|8|9|10|11|12)$/.test(qy) ? parseInt(qy,10) : 7);
     });
   </script>
 </body>
