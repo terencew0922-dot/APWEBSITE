@@ -68,7 +68,6 @@
     const typeColor = { 'Past Papers':'#2f6bff','Video Series':'#6a5cff','Revision Guide':'#38e1ff','Interactive':'#34e0a1','Notes':'#ffcf5c','Study Guide':'#2f6bff','Reading List':'#6a5cff','Atlas':'#38e1ff','Flashcards':'#34e0a1','Audio':'#ffcf5c','Tutorial':'#6a5cff','Templates':'#2f6bff','Toolkit':'#38e1ff' };
 
     const typeColorOf = t => typeColor[t] || '#7db1ff';
-    const SUBJECTS = ['Mathematics','Science','English','Humanities','Languages','Arts'];
     let selYear = null, selSubject = 'all';
 
     function cardHTML(r){
@@ -90,8 +89,7 @@
     }
 
     function subjectsForYear(y){
-      const set = new Set(resources.filter(r=>r.year===y).map(r=>r.subj));
-      return SUBJECTS.filter(s=>set.has(s));
+      return (window.KNOX_SUBJECTS_BY_YEAR && window.KNOX_SUBJECTS_BY_YEAR[y]) || [];
     }
 
     function renderSubjects(){
