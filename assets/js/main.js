@@ -129,12 +129,7 @@ function footerHTML() {
       </div>
       <div class="footer-bottom">
         <span>© ${new Date().getFullYear()} Knox Grammar School · 7 Woodville Avenue, Wahroonga NSW 2076</span>
-        <div class="socials">
-          <a href="#" aria-label="Mail">✉️</a>
-          <a href="#" aria-label="Community">💬</a>
-          <a href="#" aria-label="Calendar">📅</a>
-          <a href="#" aria-label="Library">📚</a>
-        </div>
+        <span class="foot-contact">enquiries@knox.nsw.edu.au · +61 2 9487 0122</span>
       </div>
     </div>
   </footer>`;

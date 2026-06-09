@@ -18,7 +18,7 @@
     <div class="container">
       <span class="eyebrow reveal in"><span class="dot"></span> Updated daily</span>
       <h1 class="reveal in">School <span class="grad">Announcements</span></h1>
-      <p class="reveal in">Deadlines, schedule changes, achievements and campus news — never miss a beat.</p>
+      <p class="reveal in">Updates, deadlines and notices from across the School.</p>
     </div>
   </header>
 
@@ -43,15 +43,15 @@
 
         <aside style="display:flex;flex-direction:column;gap:20px">
           <div class="card side-card reveal">
-            <h4>📌 Pinned</h4>
+            <h4>Pinned</h4>
             <div class="side-list">
-              <div class="si"><span class="ic">📝</span><div><div class="t">Exam timetable live</div><div class="s">Check your schedule now</div></div></div>
-              <div class="si"><span class="ic">🎓</span><div><div class="t">Year 12 Valedictory: June 28</div><div class="s">RSVP closes June 20</div></div></div>
-              <div class="si"><span class="ic">📚</span><div><div class="t">Macintyre Library hours</div><div class="s">Open till 8pm during exams</div></div></div>
+              <div class="si"><span class="ic">·</span><div><div class="t">Exam timetable live</div><div class="s">Check your schedule now</div></div></div>
+              <div class="si"><span class="ic">·</span><div><div class="t">Year 12 Valedictory: June 28</div><div class="s">RSVP closes June 20</div></div></div>
+              <div class="si"><span class="ic">·</span><div><div class="t">Macintyre Library hours</div><div class="s">Open till 8pm during exams</div></div></div>
             </div>
           </div>
           <div class="card side-card reveal">
-            <h4>🔔 Subscribe</h4>
+            <h4>Subscribe</h4>
             <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:14px">Get announcements delivered to your inbox.</p>
             <form id="sub-form" class="field" style="margin:0">
               <input type="email" placeholder="you@knox.nsw.edu.au" required style="margin-bottom:10px" />
@@ -69,18 +69,18 @@
     const announcements = [
       { d:'06', m:'Jun', cat:['urgent','academic'], title:'Semester examination timetable released', body:'Examinations begin June 16th. Personalised timetables and venue allocations are now available in the Resources hub. Please arrive 15 minutes early to each session.', tags:[['Urgent','urgent'],['Exams','academic']] },
       { d:'04', m:'Jun', cat:['event','academic'], title:'Founder\'s Day &amp; centenary assembly — sign-ups open', body:'Mark 100 years of Knox tradition. Register by June 13th for the Founder\'s Day assembly and the Pipes &amp; Drums Highland march through the campus.', tags:[['Event','event'],['Heritage','academic']] },
-      { d:'02', m:'Jun', cat:['sport'], title:'1st XV secures the GPS derby 🏉', body:'Magnificent effort from the boys in Blue &amp; White! Full match report and photos are posted on the Events page. Next fixture: Old Boys, Saturday 2pm at Knox Oval.', tags:[['Sport','sport']] },
-      { d:'30', m:'May', cat:['academic'], title:'Year 9 elective subject selections open', body:'Choose your 2027 electives via the Learning Hub. Information evening in the Great Hall during Wednesday period 6. Speak with your Head of House for guidance.', tags:[['Academic','academic']] },
+      { d:'02', m:'Jun', cat:['sport'], title:'1st XV secures the GPS derby', body:'A strong all-round performance from the 1st XV. Full match report and photos are on the Events page. Next fixture: Old Boys, Saturday 2pm at Knox Oval.', tags:[['Sport','sport']] },
+      { d:'30', m:'May', cat:['academic'], title:'Year 9 elective subject selections open', body:'Choose your 2027 electives via the Learning Hub. Information evening in the Great Hall on Wednesday during period 6. Speak with your Head of House for guidance.', tags:[['Academic','academic']] },
       { d:'28', m:'May', cat:['event'], title:'Knox Music Soirée — tickets available', body:'Our orchestra, choir and pipe band present a full evening of music in the Performing Arts Centre. Tickets are free but must be reserved at Reception.', tags:[['Event','event']] },
       { d:'25', m:'May', cat:['urgent'], title:'Early dismissal Thursday — staff conference', body:'School will close at 12:30pm this Thursday for professional learning. Co-curricular activities are cancelled; bus services are adjusted accordingly.', tags:[['Urgent','urgent']] },
-      { d:'22', m:'May', cat:['academic','event'], title:'Universities &amp; careers evening — Years 11 &amp; 12', body:'Meet representatives from leading universities and pathways providers. Bring your questions! Doors open 6pm in the Great Hall.', tags:[['Careers','academic'],['Event','event']] },
-      { d:'19', m:'May', cat:['sport'], title:'Inter-house athletics carnival results', body:'A magnificent day of House spirit at the carnival! Congratulations to the champion House. Full results and photos are on the Events page.', tags:[['Sport','sport']] }
+      { d:'22', m:'May', cat:['academic','event'], title:'Universities &amp; careers evening — Years 11 &amp; 12', body:'Meet representatives from leading universities and pathways providers. Doors open 6pm in the Great Hall.', tags:[['Careers','academic'],['Event','event']] },
+      { d:'19', m:'May', cat:['sport'], title:'Inter-house athletics carnival results', body:'A full day of House competition. Congratulations to the champion House. Full results and photos are on the Events page.', tags:[['Sport','sport']] }
     ];
 
     function pillClass(c){ return c; }
     function render(list){
       const feed = document.getElementById('ann-feed');
-      if(!list.length){ feed.innerHTML = '<div class="card empty-state"><div class="ic">📭</div><h3>Nothing found</h3><p>Try a different filter or search term.</p></div>'; return; }
+      if(!list.length){ feed.innerHTML = '<div class="card empty-state"><h3>Nothing found</h3><p>Try a different filter or search term.</p></div>'; return; }
       feed.innerHTML = list.map(a => `
         <article class="ann-item reveal in">
           <div class="ann-date"><div class="d">${a.d}</div><div class="m">${a.m}</div></div>
@@ -107,7 +107,7 @@
         c.classList.add('active'); cat=c.dataset.cat; apply();
       });
       document.getElementById('ann-search').oninput = e=>{ term=e.target.value; apply(); };
-      document.getElementById('sub-form').onsubmit = e=>{ e.preventDefault(); e.target.reset(); showToast('Subscribed! Check your inbox ✉️'); };
+      document.getElementById('sub-form').onsubmit = e=>{ e.preventDefault(); e.target.reset(); showToast('Subscribed.'); };
     });
   </script>
 </body>

@@ -567,3 +567,12 @@ img { max-width: 100%; display: block; }
   .section { padding: 64px 0; }
   .float-card { display: none; }
 }
+
+/* ===================== De-cluttered refinements ===================== */
+.res-top .r-icon { font-family: var(--serif-display); font-weight: 600; font-size: 1.5rem; color: var(--gold-soft); }
+.side-list .si .ic { color: var(--gold); }
+.side-list .si .ic.num { font-family: var(--serif-display); font-weight: 600; color: var(--gold-soft); }
+.a-accepted { display: inline-block; font-size: .64rem; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; color: var(--success); margin-right: 6px; }
+.foot-contact { color: var(--text-dim); }
+/* value cards read as editorial type, no icon */
+.feature-card h3 { margin-top: 2px; }

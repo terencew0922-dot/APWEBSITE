@@ -91,7 +91,7 @@ function renderForum() {
   setText('stat-solved', questions.filter(q => q.answers.some(a => a.accepted)).length);
 
   if (view.length === 0) {
-    list.innerHTML = `<div class="card empty-state"><div class="ic">🔍</div><h3>No questions here yet</h3><p>Be the first to start the conversation.</p></div>`;
+    list.innerHTML = `<div class="card empty-state"><h3>No questions yet</h3><p>Nothing matches this selection.</p></div>`;
     return;
   }
 
@@ -101,8 +101,8 @@ function renderForum() {
       <div class="answer ${a.accepted ? 'accepted' : ''}">
         <div class="avatar">${esc(initialsOf(a.author))}</div>
         <div class="a-body">
-          <div class="a-text">${a.accepted ? '✅ ' : ''}${esc(a.text)}</div>
-          <div class="a-meta">${esc(a.author)}${a.teacher ? ' · <span style="color:var(--blue-300)">Verified Teacher</span>' : ''} · ${timeAgo(a.time)}</div>
+          <div class="a-text">${a.accepted ? '<span class="a-accepted">Accepted answer</span> ' : ''}${esc(a.text)}</div>
+          <div class="a-meta">${esc(a.author)}${a.teacher ? ' · <span style="color:var(--blue-300)">Verified teacher</span>' : ''} · ${timeAgo(a.time)}</div>
         </div>
       </div>`).join('');
 
@@ -120,7 +120,7 @@ function renderForum() {
         <div class="q-foot">
           <span class="q-author"><span class="avatar">${esc(q.initials || initialsOf(q.author))}</span> ${esc(q.author)}</span>
           <span>· ${timeAgo(q.time)}</span>
-          <span class="answers-toggle" data-toggle="${q.id}">💬 ${q.answers.length} answer${q.answers.length === 1 ? '' : 's'}</span>
+          <span class="answers-toggle" data-toggle="${q.id}">${q.answers.length} answer${q.answers.length === 1 ? '' : 's'}</span>
         </div>
         <div class="answers" id="ans-${q.id}">
           ${ansHTML || '<p style="color:var(--text-dim);font-size:.88rem">No answers yet — share what you know!</p>'}
@@ -145,7 +145,7 @@ function bindForumEvents() {
       const votes = getVotes();
       const q = questions.find(x => x.id === id);
       if (votes[id]) { q.votes--; delete votes[id]; }
-      else { q.votes++; votes[id] = true; showToast('Thanks for the upvote! 👍'); }
+      else { q.votes++; votes[id] = true; showToast('Thanks for the upvote.'); }
       setVotes(votes); saveQuestions(questions); renderForum();
     };
   });
@@ -168,7 +168,7 @@ function bindForumEvents() {
       saveQuestions(questions); renderForum();
       // keep the answers panel open after posting
       const box = document.getElementById('ans-' + id); if (box) box.classList.add('open');
-      showToast('Answer posted! 🎉');
+      showToast('Answer posted.');
     };
   });
 }
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentSort = 'new';
       document.querySelectorAll('[data-sort]').forEach(c => c.classList.toggle('active', c.dataset.sort === 'new'));
       renderForum();
-      showToast('Your question is live! 🚀');
+      showToast('Your question has been posted.');
       document.getElementById('q-list').scrollIntoView({ behavior: 'smooth' });
     };
   }

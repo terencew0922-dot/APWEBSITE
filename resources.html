@@ -16,9 +16,9 @@
 
   <header class="page-hero">
     <div class="container">
-      <span class="eyebrow reveal in"><span class="dot"></span> 640+ curated materials</span>
+      <span class="eyebrow reveal in"><span class="dot"></span> Library</span>
       <h1 class="reveal in">Resource <span class="grad">Library</span></h1>
-      <p class="reveal in">Notes, past papers, videos and revision guides — handpicked by teachers, filtered for you.</p>
+      <p class="reveal in">Notes, past papers and revision guides, organised by year level and subject.</p>
     </div>
   </header>
 
@@ -52,8 +52,8 @@
   <section class="section" style="padding-top:0">
     <div class="container">
       <div class="cta-band reveal">
-        <h2>Have something worth sharing?</h2>
-        <p>Got brilliant notes or a study guide that helped you ace a topic? Submit it to the library for everyone.</p>
+        <h2>Contribute to the library</h2>
+        <p>Staff and students can submit notes, guides and past papers for the wider School to use.</p>
         <div class="hero-actions"><a href="about.html#contact" class="btn btn-primary">Submit a resource</a></div>
       </div>
     </div>
@@ -90,7 +90,7 @@
       return `
         <article class="res-card reveal in">
           <div class="res-top">
-            <div class="r-icon">${r.icon}</div>
+            <div class="r-icon">${r.subj[0]}</div>
             <span class="res-type" style="color:${typeColorOf(r.type)}">${r.type}</span>
           </div>
           <div class="res-body">
@@ -125,7 +125,7 @@
       const meta = document.getElementById('res-meta');
       if(selYear===null){
         meta.textContent = '';
-        grid.innerHTML = '<div class="card empty-state" style="grid-column:1/-1"><div class="ic">🎓</div><h3>Pick a year level to begin</h3><p>Choose a year above, then narrow by subject.</p></div>';
+        grid.innerHTML = '<div class="card empty-state" style="grid-column:1/-1"><h3>Pick a year level to begin</h3><p>Choose a year above, then narrow by subject.</p></div>';
         return;
       }
       const list = resources
@@ -134,8 +134,8 @@
       meta.innerHTML = `<span>Year ${selYear}${selSubject==='all'?'':' · '+selSubject}</span><span>${list.length} resource${list.length===1?'':'s'}</span>`;
       grid.innerHTML = list.length
         ? list.map(cardHTML).join('')
-        : '<div class="card empty-state" style="grid-column:1/-1"><div class="ic">📭</div><h3>Nothing here yet</h3><p>No resources for this selection.</p></div>';
-      grid.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>showToast('Opening "'+b.dataset.open+'" 📂'));
+        : '<div class="card empty-state" style="grid-column:1/-1"><h3>Nothing here yet</h3><p>No resources for this selection.</p></div>';
+      grid.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>showToast('Opening “'+b.dataset.open+'”'));
     }
 
     document.addEventListener('DOMContentLoaded', ()=>{
