@@ -76,7 +76,9 @@
       grid.innerHTML = items.map((it, i) => {
         const n = countFor(it, selYear);
         const href = 'subject.html?year=' + selYear + '&subject=' + encodeURIComponent(it.val);
+        const photo = window.KNOX_PHOTO(it.subj);
         return `<a class="subject-card" href="${href}" data-href="${href}" style="--i:${i}">
+          ${photo ? `<span class="sc-photo"><img src="${photo}" alt="" loading="lazy" onload="this.closest('.sc-photo').classList.add('in')" onerror="this.closest('.sc-photo').remove()"></span>` : ''}
           <span class="sc-icon">${window.KNOX_ICON(it.subj)}</span>
           <span class="sc-name">${it.label}</span>
           <span class="sc-count">${n} resource${n===1?'':'s'}</span>

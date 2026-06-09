@@ -41,4 +41,16 @@
     if (subject.indexOf('Mathematics') === 0) return ICONS.Mathematics;
     return ICONS[subject] || ICONS.default;
   };
+
+  const PHOTO_KEY = {
+    'English':'english','Geography':'geography','History':'history','Mathematics':'mathematics',
+    'Science':'science','Commerce':'commerce','Ancient History':'ancient-history','Biology':'biology',
+    'Business Studies':'business-studies','Chemistry':'chemistry','Economics':'economics',
+    'Legal Studies':'legal-studies','Modern History':'modern-history','Physics':'physics'
+  };
+  window.KNOX_PHOTO = function (subject) {
+    if (!subject) return null;
+    const key = subject.indexOf('Mathematics') === 0 ? 'mathematics' : PHOTO_KEY[subject];
+    return key ? 'assets/img/subjects/' + key + '.jpg' : null;
+  };
 })();

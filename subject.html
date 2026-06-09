@@ -15,6 +15,7 @@
   <div id="nav-mount" data-active="subjects.html"></div>
 
   <header class="subject-hero">
+    <span class="subject-photo" id="subject-photo"></span>
     <div class="container">
       <a class="subject-back" id="back-link" href="subjects.html">← <span>Back to subjects</span></a>
       <div class="subject-head">
@@ -68,6 +69,13 @@
     document.addEventListener('DOMContentLoaded', () => {
       document.title = label + ' · Knox Grammar School';
       document.getElementById('subject-emblem').innerHTML = window.KNOX_ICON(subj);
+      const photo = window.KNOX_PHOTO(subj);
+      if (photo) {
+        const ph = document.getElementById('subject-photo');
+        const img = new Image();
+        img.alt = ''; img.onload = () => ph.classList.add('in');
+        img.src = photo; ph.appendChild(img);
+      }
       document.getElementById('subject-year').textContent = 'Year ' + year;
       document.getElementById('subject-name').textContent = label;
       document.getElementById('back-link').href = 'subjects.html?year=' + year;
