@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Knox Grammar School · Learning Hub</title>
   <meta name="description" content="Knox Grammar School Learning Hub — Wahroonga, Sydney. Virile Agitur." />
+  <script>
+    // Decide early whether to play the intro loader (avoids title flash)
+    (function () {
+      try {
+        var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!rm && !sessionStorage.getItem('knoxIntro')) document.documentElement.classList.add('is-loading');
+      } catch (e) {}
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="assets/img/knox-logo.svg" />
@@ -13,6 +22,19 @@
 <body>
   <div class="bg-aura"></div>
   <div class="bg-grid"></div>
+
+  <!-- Intro loader / reveal -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-panels">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="loader-content">
+      <div class="loader-crest"><img src="assets/img/knox-logo.svg" alt="" /></div>
+      <div class="loader-count"><span id="loader-num">0</span><b>%</b></div>
+      <div class="loader-bar"><i id="loader-fill"></i></div>
+      <div class="loader-tag">Virile Agitur</div>
+    </div>
+  </div>
 
   <div id="nav-mount" data-active="index.html"></div>
 
@@ -35,6 +57,35 @@
   <div id="footer-mount"></div>
   <script src="assets/js/main.js"></script>
   <script>
+    // Intro loader: count 0->100, then lift the curtain to reveal the title
+    (function () {
+      const root = document.documentElement;
+      const loader = document.getElementById('loader');
+      if (!loader) return;
+      if (!root.classList.contains('is-loading')) { loader.remove(); document.body.classList.add('revealed'); return; }
+      document.body.style.overflow = 'hidden';
+      const num = document.getElementById('loader-num');
+      const fill = document.getElementById('loader-fill');
+      const dur = 1900, start = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      function tick(now) {
+        const t = Math.min(1, (now - start) / dur);
+        const v = Math.round(ease(t) * 100);
+        num.textContent = v;
+        if (fill) fill.style.transform = 'scaleX(' + (v / 100) + ')';
+        if (t < 1) requestAnimationFrame(tick); else finish();
+      }
+      function finish() {
+        setTimeout(() => {
+          loader.classList.add('done');
+          document.body.classList.add('revealed');
+          try { sessionStorage.setItem('knoxIntro', '1'); } catch (e) {}
+          setTimeout(() => { loader.remove(); root.classList.remove('is-loading'); document.body.style.overflow = ''; }, 1350);
+        }, 280);
+      }
+      requestAnimationFrame(tick);
+    })();
+
     // Scroll-driven parallax for the title page
     (function () {
       const hero = document.querySelector('.title-hero');
