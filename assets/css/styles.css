@@ -400,6 +400,23 @@ img { max-width: 100%; display: block; }
 .search-box .si-ic { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gold); }
 
 /* ===================== Resources ===================== */
+/* two-step picker (choose year, then subject) */
+.picker { display: flex; flex-direction: column; gap: 26px; margin-bottom: 30px; }
+.pick-label { display: flex; align-items: center; gap: 12px; font-family: var(--serif-display); font-size: 1.05rem; color: var(--text); margin-bottom: 16px; }
+.pick-label b { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; font-family: var(--serif-body); font-size: .82rem; font-weight: 700; color: var(--ink); background: linear-gradient(140deg, var(--gold-soft), var(--gold)); }
+.pick-reset { margin-left: auto; background: none; border: 0; cursor: pointer; color: var(--gold-soft); font-family: var(--serif-body); font-size: .82rem; }
+.pick-reset:hover { color: var(--gold); }
+.pick-options { display: flex; gap: 10px; flex-wrap: wrap; }
+.pick-btn {
+  padding: 13px 22px; border-radius: 7px; cursor: pointer; font-family: var(--serif-body); font-size: .96rem; font-weight: 600;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); transition: .2s;
+}
+.pick-btn:hover { color: var(--gold-soft); border-color: var(--border-strong); transform: translateY(-1px); }
+.pick-btn.active { background: linear-gradient(135deg, var(--royal), var(--royal-deep)); color: #fff; border-color: var(--border-strong); }
+.res-meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px; color: var(--text-dim); font-size: .85rem; letter-spacing: .3px; text-transform: uppercase; }
+.res-meta span:first-child { color: var(--gold-soft); }
+.res-meta:empty { display: none; }
+
 .res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .res-card { padding: 0; border-radius: var(--radius); overflow: hidden; background: var(--surface); border: 1px solid var(--border); transition: .3s; display: flex; flex-direction: column; }
 .res-card:hover { transform: translateY(-5px); border-color: var(--border-strong); box-shadow: var(--shadow-lg); }
