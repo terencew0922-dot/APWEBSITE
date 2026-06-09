@@ -64,19 +64,29 @@
         <p>Select your year to browse resources, past papers and revision guides by subject.</p>
       </div>
       <div class="year-grid">
-        <a class="year-card reveal" href="resources.html?year=7"><span class="yc-num">07</span><span class="yc-label">Year 7</span><span class="yc-go">→</span></a>
-        <a class="year-card reveal" href="resources.html?year=8"><span class="yc-num">08</span><span class="yc-label">Year 8</span><span class="yc-go">→</span></a>
-        <a class="year-card reveal" href="resources.html?year=9"><span class="yc-num">09</span><span class="yc-label">Year 9</span><span class="yc-go">→</span></a>
-        <a class="year-card reveal" href="resources.html?year=10"><span class="yc-num">10</span><span class="yc-label">Year 10</span><span class="yc-go">→</span></a>
-        <a class="year-card reveal" href="resources.html?year=11"><span class="yc-num">11</span><span class="yc-label">Year 11</span><span class="yc-go">→</span></a>
-        <a class="year-card reveal" href="resources.html?year=12"><span class="yc-num">12</span><span class="yc-label">Year 12</span><span class="yc-go">→</span></a>
+        <a class="year-card reveal" href="resources.html?year=7"><span class="yc-num">07</span><span class="yc-label">Year 7</span><span class="yc-count" data-yc="7"></span><span class="yc-go">→</span></a>
+        <a class="year-card reveal" href="resources.html?year=8"><span class="yc-num">08</span><span class="yc-label">Year 8</span><span class="yc-count" data-yc="8"></span><span class="yc-go">→</span></a>
+        <a class="year-card reveal" href="resources.html?year=9"><span class="yc-num">09</span><span class="yc-label">Year 9</span><span class="yc-count" data-yc="9"></span><span class="yc-go">→</span></a>
+        <a class="year-card reveal" href="resources.html?year=10"><span class="yc-num">10</span><span class="yc-label">Year 10</span><span class="yc-count" data-yc="10"></span><span class="yc-go">→</span></a>
+        <a class="year-card reveal" href="resources.html?year=11"><span class="yc-num">11</span><span class="yc-label">Year 11</span><span class="yc-count" data-yc="11"></span><span class="yc-go">→</span></a>
+        <a class="year-card reveal" href="resources.html?year=12"><span class="yc-num">12</span><span class="yc-label">Year 12</span><span class="yc-count" data-yc="12"></span><span class="yc-go">→</span></a>
       </div>
     </div>
   </section>
 
   <div id="footer-mount"></div>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/resources-data.js"></script>
   <script>
+    // Fill each year card with its resource count from the shared data
+    (function () {
+      const data = window.KNOX_RESOURCES || [];
+      document.querySelectorAll('.yc-count[data-yc]').forEach(el => {
+        const n = data.filter(r => r.year === parseInt(el.dataset.yc, 10)).length;
+        el.textContent = n + (n === 1 ? ' resource' : ' resources');
+      });
+    })();
+
     // Intro loader: count 0->100, then lift the curtain to reveal the title
     (function () {
       const root = document.documentElement;

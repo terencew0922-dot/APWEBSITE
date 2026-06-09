@@ -167,11 +167,22 @@ img { max-width: 100%; display: block; }
   padding: 34px 30px; border: 1px solid var(--border); border-radius: 8px;
   background: var(--surface); transition: transform .25s, border-color .25s, background .25s;
 }
-.year-card::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0; background: linear-gradient(90deg, var(--gold), transparent); transition: width .35s; }
+.year-card::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 0; background: linear-gradient(90deg, var(--gold), transparent); transition: width .35s; z-index: 2; }
+/* saltire weave that fades in on hover */
+.year-card::after {
+  content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .3s; pointer-events: none;
+  background:
+    repeating-linear-gradient(45deg, rgba(201,168,92,.07) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(-45deg, rgba(201,168,92,.07) 0 1px, transparent 1px 16px);
+  mask-image: radial-gradient(circle at 70% 30%, #000, transparent 75%);
+}
+.year-card > * { position: relative; z-index: 1; }
 .year-card:hover { transform: translateY(-5px); border-color: var(--border-strong); background: linear-gradient(160deg, rgba(47,111,224,.14), var(--surface)); }
 .year-card:hover::before { width: 100%; }
+.year-card:hover::after { opacity: 1; }
 .year-card .yc-num { font-family: var(--serif-display); font-size: 3.2rem; font-weight: 600; line-height: 1; color: var(--gold-soft); }
 .year-card .yc-label { font-size: .82rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+.year-card .yc-count { font-size: .8rem; color: var(--text-dim); margin-top: 2px; }
 .year-card .yc-go { position: absolute; top: 28px; right: 28px; color: var(--gold); opacity: 0; transform: translateX(-6px); transition: .25s; font-size: 1.1rem; }
 .year-card:hover .yc-go { opacity: 1; transform: none; }
 @media (max-width: 680px) { .year-grid { grid-template-columns: 1fr 1fr; } }

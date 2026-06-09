@@ -25,7 +25,7 @@
   <section class="section" style="padding-top:30px">
     <div class="container">
       <div class="picker reveal">
-        <div class="pick-step">
+        <div class="pick-step" id="year-step">
           <div class="pick-label"><b>1</b> Choose a year level</div>
           <div class="pick-options" id="year-options">
             <button class="pick-btn" data-year="7">Year 7</button>
@@ -61,24 +61,9 @@
 
   <div id="footer-mount"></div>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/resources-data.js"></script>
   <script>
-    const resources = [
-      { subj:'Mathematics', year:11, type:'Past Papers', icon:'📐', title:'Algebra II — Full Exam Pack', desc:'Ten years of past papers with fully worked mark schemes and examiner tips.', tags:['PDF'] },
-      { subj:'Mathematics', year:12, type:'Video Series', icon:'🎬', title:'Calculus Crash Course', desc:'Limits, derivatives and integration explained from scratch in 12 short lessons.', tags:['Video'] },
-      { subj:'Science', year:9, type:'Revision Guide', icon:'🧪', title:'Chemistry: Bonding &amp; Reactions', desc:'Visual revision guide covering ionic, covalent and metallic bonding with diagrams.', tags:['PDF'] },
-      { subj:'Science', year:7, type:'Interactive', icon:'🔬', title:'Virtual Biology Lab', desc:'Run dissections and cell experiments safely in an interactive 3D simulation.', tags:['Web'] },
-      { subj:'Science', year:12, type:'Notes', icon:'⚛️', title:'Physics Formula Sheet', desc:'Every formula you need for mechanics, waves and electricity on two clean pages.', tags:['PDF'] },
-      { subj:'English', year:8, type:'Study Guide', icon:'📖', title:'Essay Writing Masterclass', desc:'Structure, thesis statements and analysis techniques for top-band essays.', tags:['PDF'] },
-      { subj:'English', year:12, type:'Reading List', icon:'📚', title:'Senior English Reading List', desc:'Curated novels and poems with discussion questions to prepare for next term.', tags:['Doc'] },
-      { subj:'Humanities', year:11, type:'Past Papers', icon:'🏛️', title:'History Source Analysis Pack', desc:'Source-based questions with model answers and the SOURCE technique breakdown.', tags:['PDF'] },
-      { subj:'Humanities', year:7, type:'Atlas', icon:'🗺️', title:'Interactive Geography Atlas', desc:'Climate, population and tectonics maps you can layer and explore.', tags:['Web'] },
-      { subj:'Languages', year:8, type:'Flashcards', icon:'🇫🇷', title:'French Vocabulary Decks', desc:'1,000 high-frequency words sorted by theme with audio pronunciation.', tags:['App'] },
-      { subj:'Languages', year:9, type:'Audio', icon:'🎧', title:'Spanish Listening Practice', desc:'Graded listening clips with transcripts to sharpen your comprehension.', tags:['Audio'] },
-      { subj:'Arts', year:12, type:'Tutorial', icon:'🎨', title:'Portfolio Building Workshop', desc:'How to document process work and present a standout art portfolio.', tags:['Video'] },
-      { subj:'Arts', year:7, type:'Templates', icon:'🎼', title:'Music Theory Worksheets', desc:'Scales, intervals and chord progressions with printable practice sheets.', tags:['PDF'] },
-      { subj:'Mathematics', year:12, type:'Toolkit', icon:'🧮', title:'Statistics Cheat Sheet', desc:'Probability rules, distributions and hypothesis testing at a glance.', tags:['PDF'] },
-      { subj:'Science', year:10, type:'Video Series', icon:'🌍', title:'Earth &amp; Climate Science', desc:'Documentary-style lessons connecting curriculum topics to real-world events.', tags:['Video'] }
-    ];
+    const resources = window.KNOX_RESOURCES;
 
     const typeColor = { 'Past Papers':'#2f6bff','Video Series':'#6a5cff','Revision Guide':'#38e1ff','Interactive':'#34e0a1','Notes':'#ffcf5c','Study Guide':'#2f6bff','Reading List':'#6a5cff','Atlas':'#38e1ff','Flashcards':'#34e0a1','Audio':'#ffcf5c','Tutorial':'#6a5cff','Templates':'#2f6bff','Toolkit':'#38e1ff' };
 
@@ -150,17 +135,19 @@
       document.getElementById('reset-year').onclick=()=>{
         selYear = null; selSubject = 'all';
         document.querySelectorAll('#year-options [data-year]').forEach(x=>x.classList.remove('active'));
+        document.getElementById('year-step').hidden = false;
         document.getElementById('subject-step').hidden = true;
         renderResults();
       };
 
-      // If arriving from the home page with ?year=N, jump straight to subject selection
+      // If arriving from the home page with ?year=N, skip the year step and
+      // open straight at subject selection for that year.
       const qy = new URLSearchParams(location.search).get('year');
       if (qy && /^(7|8|9|10|11|12)$/.test(qy)) {
         const btn = document.querySelector('#year-options [data-year="'+qy+'"]');
         if (btn) {
           btn.click();
-          document.querySelector('.picker').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('year-step').hidden = true;
         }
       }
     });
