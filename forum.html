@@ -45,7 +45,7 @@
                 <label for="q-detail">Add detail (optional)</label>
                 <textarea id="q-detail" rows="3" placeholder="Share what you've tried or where you're stuck..."></textarea>
               </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
                 <div class="field">
                   <label for="q-subject">Subject</label>
                   <select id="q-subject">
@@ -56,6 +56,17 @@
                     <option>Languages</option>
                     <option>Arts</option>
                     <option>Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="q-year">Year level</label>
+                  <select id="q-year">
+                    <option value="7">Year 7</option>
+                    <option value="8">Year 8</option>
+                    <option value="9">Year 9</option>
+                    <option value="10">Year 10</option>
+                    <option value="11">Year 11</option>
+                    <option value="12">Year 12</option>
                   </select>
                 </div>
                 <div class="field">
@@ -81,7 +92,7 @@
           </div>
 
           <!-- subject filters -->
-          <div class="chips reveal" style="margin-bottom:22px">
+          <div class="chips reveal" style="margin-bottom:14px">
             <div class="chip active" data-filter="All">All</div>
             <div class="chip" data-filter="Mathematics">Mathematics</div>
             <div class="chip" data-filter="Science">Science</div>
@@ -89,6 +100,17 @@
             <div class="chip" data-filter="Humanities">Humanities</div>
             <div class="chip" data-filter="Languages">Languages</div>
             <div class="chip" data-filter="Arts">Arts</div>
+          </div>
+
+          <!-- year filters -->
+          <div class="chips reveal" style="margin-bottom:22px">
+            <div class="chip active" data-year="All">All Years</div>
+            <div class="chip" data-year="7">Year 7</div>
+            <div class="chip" data-year="8">Year 8</div>
+            <div class="chip" data-year="9">Year 9</div>
+            <div class="chip" data-year="10">Year 10</div>
+            <div class="chip" data-year="11">Year 11</div>
+            <div class="chip" data-year="12">Year 12</div>
           </div>
 
           <div class="q-list" id="q-list"><!-- injected --></div>

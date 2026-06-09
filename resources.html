@@ -40,6 +40,16 @@
         </div>
       </div>
 
+      <div class="chips reveal" id="res-years" style="margin-bottom:30px">
+        <div class="chip active" data-year="all">All Years</div>
+        <div class="chip" data-year="7">Year 7</div>
+        <div class="chip" data-year="8">Year 8</div>
+        <div class="chip" data-year="9">Year 9</div>
+        <div class="chip" data-year="10">Year 10</div>
+        <div class="chip" data-year="11">Year 11</div>
+        <div class="chip" data-year="12">Year 12</div>
+      </div>
+
       <div class="res-grid" id="res-grid"><!-- injected --></div>
     </div>
   </section>
@@ -58,28 +68,28 @@
   <script src="assets/js/main.js"></script>
   <script>
     const resources = [
-      { subj:'Mathematics', type:'Past Papers', icon:'📐', title:'Algebra II — Full Exam Pack', desc:'Ten years of past papers with fully worked mark schemes and examiner tips.', tags:['Grade 11','PDF'] },
-      { subj:'Mathematics', type:'Video Series', icon:'🎬', title:'Calculus Crash Course', desc:'Limits, derivatives and integration explained from scratch in 12 short lessons.', tags:['Grade 12','Video'] },
-      { subj:'Science', type:'Revision Guide', icon:'🧪', title:'Chemistry: Bonding &amp; Reactions', desc:'Visual revision guide covering ionic, covalent and metallic bonding with diagrams.', tags:['Grade 10','PDF'] },
-      { subj:'Science', type:'Interactive', icon:'🔬', title:'Virtual Biology Lab', desc:'Run dissections and cell experiments safely in an interactive 3D simulation.', tags:['All Grades','Web'] },
-      { subj:'Science', type:'Notes', icon:'⚛️', title:'Physics Formula Sheet', desc:'Every formula you need for mechanics, waves and electricity on two clean pages.', tags:['Grade 12','PDF'] },
-      { subj:'English', type:'Study Guide', icon:'📖', title:'Essay Writing Masterclass', desc:'Structure, thesis statements and analysis techniques for top-band essays.', tags:['All Grades','PDF'] },
-      { subj:'English', type:'Reading List', icon:'📚', title:'AP Literature Reading List', desc:'Curated novels and poems with discussion questions to prep for next term.', tags:['Grade 12','Doc'] },
-      { subj:'Humanities', type:'Past Papers', icon:'🏛️', title:'History Source Analysis Pack', desc:'Source-based questions with model answers and the SOURCE technique breakdown.', tags:['Grade 11','PDF'] },
-      { subj:'Humanities', type:'Atlas', icon:'🗺️', title:'Interactive Geography Atlas', desc:'Climate, population and tectonics maps you can layer and explore.', tags:['All Grades','Web'] },
-      { subj:'Languages', type:'Flashcards', icon:'🇫🇷', title:'French Vocabulary Decks', desc:'1,000 high-frequency words sorted by theme with audio pronunciation.', tags:['All Grades','App'] },
-      { subj:'Languages', type:'Audio', icon:'🎧', title:'Spanish Listening Practice', desc:'Graded listening clips with transcripts to sharpen your comprehension.', tags:['Grade 10','Audio'] },
-      { subj:'Arts', type:'Tutorial', icon:'🎨', title:'Portfolio Building Workshop', desc:'How to document process work and present a standout art portfolio.', tags:['Grade 12','Video'] },
-      { subj:'Arts', type:'Templates', icon:'🎼', title:'Music Theory Worksheets', desc:'Scales, intervals and chord progressions with printable practice sheets.', tags:['All Grades','PDF'] },
-      { subj:'Mathematics', type:'Toolkit', icon:'🧮', title:'Statistics Cheat Sheet', desc:'Probability rules, distributions and hypothesis testing at a glance.', tags:['Grade 12','PDF'] },
-      { subj:'Science', type:'Video Series', icon:'🌍', title:'Earth &amp; Climate Science', desc:'Documentary-style lessons connecting curriculum topics to real-world events.', tags:['Grade 11','Video'] }
+      { subj:'Mathematics', year:11, type:'Past Papers', icon:'📐', title:'Algebra II — Full Exam Pack', desc:'Ten years of past papers with fully worked mark schemes and examiner tips.', tags:['PDF'] },
+      { subj:'Mathematics', year:12, type:'Video Series', icon:'🎬', title:'Calculus Crash Course', desc:'Limits, derivatives and integration explained from scratch in 12 short lessons.', tags:['Video'] },
+      { subj:'Science', year:9, type:'Revision Guide', icon:'🧪', title:'Chemistry: Bonding &amp; Reactions', desc:'Visual revision guide covering ionic, covalent and metallic bonding with diagrams.', tags:['PDF'] },
+      { subj:'Science', year:7, type:'Interactive', icon:'🔬', title:'Virtual Biology Lab', desc:'Run dissections and cell experiments safely in an interactive 3D simulation.', tags:['Web'] },
+      { subj:'Science', year:12, type:'Notes', icon:'⚛️', title:'Physics Formula Sheet', desc:'Every formula you need for mechanics, waves and electricity on two clean pages.', tags:['PDF'] },
+      { subj:'English', year:8, type:'Study Guide', icon:'📖', title:'Essay Writing Masterclass', desc:'Structure, thesis statements and analysis techniques for top-band essays.', tags:['PDF'] },
+      { subj:'English', year:12, type:'Reading List', icon:'📚', title:'Senior English Reading List', desc:'Curated novels and poems with discussion questions to prepare for next term.', tags:['Doc'] },
+      { subj:'Humanities', year:11, type:'Past Papers', icon:'🏛️', title:'History Source Analysis Pack', desc:'Source-based questions with model answers and the SOURCE technique breakdown.', tags:['PDF'] },
+      { subj:'Humanities', year:7, type:'Atlas', icon:'🗺️', title:'Interactive Geography Atlas', desc:'Climate, population and tectonics maps you can layer and explore.', tags:['Web'] },
+      { subj:'Languages', year:8, type:'Flashcards', icon:'🇫🇷', title:'French Vocabulary Decks', desc:'1,000 high-frequency words sorted by theme with audio pronunciation.', tags:['App'] },
+      { subj:'Languages', year:9, type:'Audio', icon:'🎧', title:'Spanish Listening Practice', desc:'Graded listening clips with transcripts to sharpen your comprehension.', tags:['Audio'] },
+      { subj:'Arts', year:12, type:'Tutorial', icon:'🎨', title:'Portfolio Building Workshop', desc:'How to document process work and present a standout art portfolio.', tags:['Video'] },
+      { subj:'Arts', year:7, type:'Templates', icon:'🎼', title:'Music Theory Worksheets', desc:'Scales, intervals and chord progressions with printable practice sheets.', tags:['PDF'] },
+      { subj:'Mathematics', year:12, type:'Toolkit', icon:'🧮', title:'Statistics Cheat Sheet', desc:'Probability rules, distributions and hypothesis testing at a glance.', tags:['PDF'] },
+      { subj:'Science', year:10, type:'Video Series', icon:'🌍', title:'Earth &amp; Climate Science', desc:'Documentary-style lessons connecting curriculum topics to real-world events.', tags:['Video'] }
     ];
 
     const typeColor = { 'Past Papers':'#2f6bff','Video Series':'#6a5cff','Revision Guide':'#38e1ff','Interactive':'#34e0a1','Notes':'#ffcf5c','Study Guide':'#2f6bff','Reading List':'#6a5cff','Atlas':'#38e1ff','Flashcards':'#34e0a1','Audio':'#ffcf5c','Tutorial':'#6a5cff','Templates':'#2f6bff','Toolkit':'#38e1ff' };
 
     function render(list){
       const grid = document.getElementById('res-grid');
-      if(!list.length){ grid.innerHTML='<div class="card empty-state" style="grid-column:1/-1"><div class="ic">🔍</div><h3>No resources found</h3><p>Try another subject or search.</p></div>'; return; }
+      if(!list.length){ grid.innerHTML='<div class="card empty-state" style="grid-column:1/-1"><div class="ic">🔍</div><h3>No resources found</h3><p>Try another subject or year.</p></div>'; return; }
       grid.innerHTML = list.map(r=>`
         <article class="res-card reveal in">
           <div class="res-top">
@@ -90,7 +100,7 @@
             <h3>${r.title}</h3>
             <p>${r.desc}</p>
             <div class="res-foot">
-              <div class="res-tags">${r.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+              <div class="res-tags"><span class="tag" style="color:var(--gold-soft);border-color:var(--border-strong)">Year ${r.year}</span>${r.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
               <button class="btn btn-ghost btn-sm" data-open="${r.title}">Open ↗</button>
             </div>
           </div>
@@ -98,19 +108,25 @@
       grid.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>showToast('Opening "'+b.dataset.open+'" 📂'));
     }
 
-    let subj='all', term='';
+    let subj='all', year='all', term='';
     function apply(){
-      render(resources.filter(r=>{
+      const list = resources.filter(r=>{
         const ms = subj==='all' || r.subj===subj;
+        const my = year==='all' || String(r.year)===year;
         const mt = !term || (r.title+r.desc+r.type).toLowerCase().includes(term.toLowerCase());
-        return ms && mt;
-      }));
+        return ms && my && mt;
+      }).sort((a,b)=> a.year-b.year || a.subj.localeCompare(b.subj));  // sort by Year 7 -> 12
+      render(list);
     }
     document.addEventListener('DOMContentLoaded', ()=>{
       apply();
       document.querySelectorAll('#res-filters .chip').forEach(c=>c.onclick=()=>{
         document.querySelectorAll('#res-filters .chip').forEach(x=>x.classList.remove('active'));
         c.classList.add('active'); subj=c.dataset.subj; apply();
+      });
+      document.querySelectorAll('#res-years .chip').forEach(c=>c.onclick=()=>{
+        document.querySelectorAll('#res-years .chip').forEach(x=>x.classList.remove('active'));
+        c.classList.add('active'); year=c.dataset.year; apply();
       });
       document.getElementById('res-search').oninput=e=>{ term=e.target.value; apply(); };
     });
