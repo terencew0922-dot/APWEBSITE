@@ -44,17 +44,17 @@
   <script src="assets/js/subject-icons.js"></script>
   <script>
     const subjectsForYear = y => (window.KNOX_SUBJECTS_BY_YEAR && window.KNOX_SUBJECTS_BY_YEAR[y]) || [];
-    const levelsForYear   = y => (window.KNOX_MATHS_LEVELS && window.KNOX_MATHS_LEVELS[y]) || [];
+    const streamsFor = (subj, y) => (window.KNOX_STREAMS && window.KNOX_STREAMS[subj] && window.KNOX_STREAMS[subj][y]) || [];
 
     function subjectItems(y){
       const items = [];
       subjectsForYear(y).forEach(s => {
-        const levels = levelsForYear(y);
-        if (s === 'Mathematics' && levels.length){
-          levels.forEach(l => items.push({
-            subj:'Mathematics', level:l,
-            label: l.indexOf('Mathematics') === 0 ? l : 'Mathematics ' + l,
-            val: 'Mathematics|' + l
+        const streams = streamsFor(s, y);
+        if (streams.length){
+          streams.forEach(l => items.push({
+            subj: s, level: l,
+            label: l.indexOf(s) === 0 ? l : s + ' ' + l,
+            val: s + '|' + l
           }));
         } else {
           items.push({ subj:s, label:s, val:s });

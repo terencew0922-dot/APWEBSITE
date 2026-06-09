@@ -47,7 +47,7 @@
     const year = parseInt(params.get('year'), 10);
     const val = params.get('subject') || '';
     const [subj, level] = val.split('|');
-    const label = level ? (level.indexOf('Mathematics') === 0 ? level : 'Mathematics ' + level) : subj;
+    const label = level ? (level.indexOf(subj) === 0 ? level : subj + ' ' + level) : subj;
 
     function cardHTML(r, i){
       return `<article class="res-card" style="--i:${i}">

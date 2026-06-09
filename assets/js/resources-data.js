@@ -11,14 +11,20 @@ window.KNOX_SUBJECTS_BY_YEAR = {
   12: ['Ancient History', 'Biology', 'Business Studies', 'Chemistry', 'Economics', 'English', 'Geography', 'Legal Studies', 'Mathematics', 'Modern History', 'Physics']
 };
 
-/* Mathematics streams / course levels, shown when Mathematics is selected. */
-window.KNOX_MATHS_LEVELS = {
-  7:  ['Core', 'da Vinci'],
-  8:  ['Core', 'da Vinci'],
-  9:  ['Core', 'da Vinci'],
-  10: ['Core', 'da Vinci'],
-  11: ['Standard 1', 'Standard 2', 'Mathematics Advanced', 'Mathematics Extension 1'],
-  12: ['Standard 1', 'Standard 2', 'Mathematics Advanced', 'Mathematics Extension 1', 'Mathematics Extension 2']
+/* Subjects that split into streams / course levels per year. */
+window.KNOX_STREAMS = {
+  Mathematics: {
+    7:  ['Core', 'da Vinci'],
+    8:  ['Core', 'da Vinci'],
+    9:  ['Core', 'da Vinci'],
+    10: ['Core', 'da Vinci'],
+    11: ['Standard 1', 'Standard 2', 'Mathematics Advanced', 'Mathematics Extension 1'],
+    12: ['Standard 1', 'Standard 2', 'Mathematics Advanced', 'Mathematics Extension 1', 'Mathematics Extension 2']
+  },
+  English: {
+    11: ['Standard', 'Advanced', 'Extension 1'],
+    12: ['Standard', 'Advanced', 'Extension 1', 'Extension 2']
+  }
 };
 
 window.KNOX_RESOURCES = [
@@ -59,12 +65,18 @@ window.KNOX_RESOURCES = [
   { subj:'Mathematics', year:11, level:'Standard 2',           type:'Study Guide', title:'Standard 2 — Financial Mathematics', desc:'Earning, investing and depreciation with HSC-style questions.', tags:['PDF'] },
   { subj:'Mathematics', year:11, level:'Mathematics Advanced', type:'Past Papers', title:'Advanced — Preliminary Exam Pack', desc:'Preliminary past papers with fully worked mark schemes and tips.', tags:['PDF'] },
   { subj:'Mathematics', year:11, level:'Mathematics Extension 1', type:'Revision Guide', title:'Extension 1 — Further Calculus', desc:'Polynomials, further calculus and combinatorics with practice.', tags:['PDF'] },
+  { subj:'English',     year:11, level:'Standard',    type:'Notes',        title:'Standard — Reading to Write', desc:'Common Module notes and writing skills for the Preliminary Standard course.', tags:['PDF'] },
+  { subj:'English',     year:11, level:'Advanced',    type:'Study Guide',  title:'Advanced — Texts &amp; Human Experiences', desc:'Analysis frameworks and sample paragraphs for the Advanced Common Module.', tags:['PDF'] },
+  { subj:'English',     year:11, level:'Extension 1', type:'Reading List', title:'Extension 1 — Genre Study', desc:'Wider reading and theory for the Preliminary Extension 1 elective.', tags:['Doc'] },
   { subj:'Modern History', year:11, type:'Past Papers',  title:'History Source Analysis Pack',      desc:'Source-based questions with model answers and the SOURCE technique.', tags:['PDF'] },
 
   /* ---- Year 12 ---- */
   { subj:'Chemistry',   year:12, type:'Revision Guide', title:'Organic Chemistry Reaction Map',     desc:'Functional groups and reaction pathways on a single revision sheet.', tags:['PDF'] },
   { subj:'Economics',   year:12, type:'Notes',          title:'Microeconomics Summary',             desc:'Markets, elasticity and government intervention summarised for the HSC.', tags:['PDF'] },
-  { subj:'English',     year:12, type:'Reading List',   title:'Senior English Reading List',        desc:'Set texts and related material with discussion questions for the HSC.', tags:['Doc'] },
+  { subj:'English',     year:12, level:'Advanced',    type:'Reading List', title:'Advanced — Prescribed Text List', desc:'Prescribed texts and related material with discussion questions for the HSC.', tags:['Doc'] },
+  { subj:'English',     year:12, level:'Standard',    type:'Past Papers',  title:'Standard — HSC Practice Papers', desc:'Past HSC papers for the Common Module and electives with marking guidelines.', tags:['PDF'] },
+  { subj:'English',     year:12, level:'Extension 1', type:'Study Guide',  title:'Extension 1 — Elective Study Guide', desc:'Notes and sample responses for the Extension 1 electives and Common Module.', tags:['PDF'] },
+  { subj:'English',     year:12, level:'Extension 2', type:'Notes',        title:'Extension 2 — Major Work Handbook', desc:'Planning, drafting and reflection guidance for the Extension 2 major work.', tags:['Doc'] },
   { subj:'Mathematics', year:12, level:'Standard 2',           type:'Past Papers',  title:'Standard 2 — HSC Practice Papers', desc:'Full HSC practice papers with worked solutions and marking notes.', tags:['PDF'] },
   { subj:'Mathematics', year:12, level:'Mathematics Advanced', type:'Video Series', title:'Advanced — Calculus Crash Course', desc:'Differentiation and integration from scratch in 12 short lessons.', tags:['Video'] },
   { subj:'Mathematics', year:12, level:'Mathematics Extension 1', type:'Toolkit',   title:'Extension 1 — HSC Revision Sheet', desc:'Vectors, projectile motion and the binomial theorem at a glance.', tags:['PDF'] },
