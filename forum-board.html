@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forum · Knox Grammar School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/knox-logo.svg" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body class="page-enter">
+  <div class="bg-aura"></div>
+  <div class="bg-grid"></div>
+  <div id="nav-mount" data-active="forum.html"></div>
+
+  <header class="subject-hero">
+    <span class="subject-photo" id="subject-photo"></span>
+    <div class="container">
+      <a class="subject-back" id="back-link" href="forum.html">← <span>Back to forums</span></a>
+      <div class="subject-head">
+        <span class="subject-emblem" id="subject-emblem"></span>
+        <div>
+          <span class="eyebrow"><span class="dot"></span> <span id="board-year">Year</span> · Q&amp;A</span>
+          <h1 id="board-name">Forum</h1>
+          <p id="board-tag">Ask and answer questions for this subject.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:26px">
+    <div class="container">
+      <div class="stats-band reveal" style="grid-template-columns:repeat(3,1fr);margin-bottom:34px">
+        <div class="stat-box"><div class="num"><span id="stat-q">0</span></div><div class="lbl">Questions</div></div>
+        <div class="stat-box"><div class="num"><span id="stat-a">0</span></div><div class="lbl">Answers</div></div>
+        <div class="stat-box"><div class="num"><span id="stat-solved">0</span></div><div class="lbl">Solved</div></div>
+      </div>
+
+      <div class="forum-layout">
+        <div>
+          <div class="card ask-box reveal">
+            <h3>Ask this board</h3>
+            <form id="ask-form">
+              <div class="field">
+                <label for="q-title">Your question</label>
+                <input type="text" id="q-title" placeholder="e.g. How do I structure my answer?" required />
+              </div>
+              <div class="field">
+                <label for="q-detail">Add detail (optional)</label>
+                <textarea id="q-detail" rows="3" placeholder="Share what you've tried or where you're stuck..."></textarea>
+              </div>
+              <div class="field">
+                <label for="display-name">Display name (optional)</label>
+                <input type="text" id="display-name" placeholder="Anonymous Student" />
+              </div>
+              <button class="btn btn-primary" type="submit" style="width:100%">Post your question</button>
+            </form>
+          </div>
+
+          <div class="toolbar reveal">
+            <div class="chips">
+              <div class="chip active" data-sort="votes">Top</div>
+              <div class="chip" data-sort="new">Newest</div>
+              <div class="chip" data-sort="unanswered">Unanswered</div>
+            </div>
+            <div class="search-box">
+              <span class="si-ic">🔍</span>
+              <input type="text" id="forum-search" placeholder="Search this board..." />
+            </div>
+          </div>
+
+          <div class="q-list" id="q-list"><!-- injected --></div>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:20px">
+          <div class="card side-card reveal">
+            <h4>How it works</h4>
+            <div class="side-list">
+              <div class="si"><span class="ic num">1</span><div><div class="t">Ask clearly</div><div class="s">A good title gets faster answers.</div></div></div>
+              <div class="si"><span class="ic num">2</span><div><div class="t">Upvote what helps</div><div class="s">Surface the best explanations.</div></div></div>
+              <div class="si"><span class="ic num">3</span><div><div class="t">Pay it forward</div><div class="s">Answer one, learn twice.</div></div></div>
+            </div>
+          </div>
+          <div class="card side-card reveal" style="background:linear-gradient(135deg,rgba(23,72,176,.22),rgba(201,168,92,.1))">
+            <h4>Be a gentleman</h4>
+            <p style="color:var(--text-muted);font-size:.9rem">A respectful space in the spirit of Knox brotherhood. No question is too small — we learn together.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/subject-icons.js"></script>
+  <script src="assets/js/forum-data.js"></script>
+  <script src="assets/js/forum.js"></script>
+  <script>
+    // Header for this board (icon, photo, title, back link)
+    (function () {
+      const p = new URLSearchParams(location.search);
+      const year = parseInt(p.get('year'), 10);
+      const [subj, level] = (p.get('subject') || '').split('|');
+      const label = level ? (level.indexOf(subj) === 0 ? level : subj + ' ' + level) : subj;
+      document.addEventListener('DOMContentLoaded', () => {
+        if (!subj) return;
+        document.title = label + ' Forum · Knox Grammar School';
+        document.getElementById('board-name').textContent = label;
+        document.getElementById('board-year').textContent = 'Year ' + year;
+        document.getElementById('subject-emblem').innerHTML = window.KNOX_ICON(subj, level);
+        document.getElementById('back-link').href = 'forum.html?year=' + year;
+        const photo = window.KNOX_PHOTO(subj, level);
+        if (photo) {
+          const ph = document.getElementById('subject-photo');
+          const img = new Image(); img.alt = ''; img.onload = () => ph.classList.add('in'); img.src = photo; ph.appendChild(img);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -9,142 +9,97 @@
   <link rel="icon" type="image/svg+xml" href="assets/img/knox-logo.svg" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body>
+<body class="page-enter">
   <div class="bg-aura"></div>
   <div class="bg-grid"></div>
   <div id="nav-mount" data-active="forum.html"></div>
 
-  <header class="page-hero">
+  <header class="page-hero" style="padding-bottom:18px">
     <div class="container">
       <span class="eyebrow reveal in"><span class="dot"></span> Questions &amp; answers</span>
-      <h1 class="reveal in">Q&amp;A <span class="grad">Forum</span></h1>
-      <p class="reveal in">Stuck on a problem? Ask the community. Know the answer? Help someone out.</p>
+      <h1 class="reveal in" id="forum-title">Q&amp;A Forum</h1>
+      <p class="reveal in">Pick your year and subject to open its discussion board.</p>
     </div>
   </header>
 
-  <section class="section" style="padding-top:24px">
+  <section class="section" style="padding-top:18px">
     <div class="container">
-      <!-- stat row -->
-      <div class="stats-band reveal" style="grid-template-columns:repeat(3,1fr);margin-bottom:36px">
-        <div class="stat-box"><div class="num"><span id="stat-q">0</span></div><div class="lbl">Questions</div></div>
-        <div class="stat-box"><div class="num"><span id="stat-a">0</span></div><div class="lbl">Answers</div></div>
-        <div class="stat-box"><div class="num"><span id="stat-solved">0</span></div><div class="lbl">Solved</div></div>
+      <div class="tabs" id="year-tabs" style="margin-bottom:34px">
+        <button class="tab" data-year="7">Year 7</button>
+        <button class="tab" data-year="8">Year 8</button>
+        <button class="tab" data-year="9">Year 9</button>
+        <button class="tab" data-year="10">Year 10</button>
+        <button class="tab" data-year="11">Year 11</button>
+        <button class="tab" data-year="12">Year 12</button>
       </div>
-
-      <div class="forum-layout">
-        <div>
-          <!-- Ask box -->
-          <div class="card ask-box reveal">
-            <h3>Ask the community</h3>
-            <form id="ask-form">
-              <div class="field">
-                <label for="q-title">Your question</label>
-                <input type="text" id="q-title" placeholder="e.g. How do I factor a difference of squares?" required />
-              </div>
-              <div class="field">
-                <label for="q-detail">Add detail (optional)</label>
-                <textarea id="q-detail" rows="3" placeholder="Share what you've tried or where you're stuck..."></textarea>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
-                <div class="field">
-                  <label for="q-subject">Subject</label>
-                  <select id="q-subject">
-                    <option>Mathematics</option>
-                    <option>Science</option>
-                    <option>English</option>
-                    <option>Humanities</option>
-                    <option>Languages</option>
-                    <option>Arts</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label for="q-year">Year level</label>
-                  <select id="q-year">
-                    <option value="7">Year 7</option>
-                    <option value="8">Year 8</option>
-                    <option value="9">Year 9</option>
-                    <option value="10">Year 10</option>
-                    <option value="11">Year 11</option>
-                    <option value="12">Year 12</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label for="display-name">Display name (optional)</label>
-                  <input type="text" id="display-name" placeholder="Anonymous Student" />
-                </div>
-              </div>
-              <button class="btn btn-primary" type="submit" style="width:100%">Post your question</button>
-            </form>
-          </div>
-
-          <!-- toolbar -->
-          <div class="toolbar reveal">
-            <div class="chips">
-              <div class="chip active" data-sort="votes">Top</div>
-              <div class="chip" data-sort="new">Newest</div>
-              <div class="chip" data-sort="unanswered">Unanswered</div>
-            </div>
-            <div class="search-box">
-              <span class="si-ic">🔍</span>
-              <input type="text" id="forum-search" placeholder="Search questions..." />
-            </div>
-          </div>
-
-          <!-- subject filters -->
-          <div class="chips reveal" style="margin-bottom:14px">
-            <div class="chip active" data-filter="All">All</div>
-            <div class="chip" data-filter="Mathematics">Mathematics</div>
-            <div class="chip" data-filter="Science">Science</div>
-            <div class="chip" data-filter="English">English</div>
-            <div class="chip" data-filter="Humanities">Humanities</div>
-            <div class="chip" data-filter="Languages">Languages</div>
-            <div class="chip" data-filter="Arts">Arts</div>
-          </div>
-
-          <!-- year filters -->
-          <div class="chips reveal" style="margin-bottom:22px">
-            <div class="chip active" data-year="All">All Years</div>
-            <div class="chip" data-year="7">Year 7</div>
-            <div class="chip" data-year="8">Year 8</div>
-            <div class="chip" data-year="9">Year 9</div>
-            <div class="chip" data-year="10">Year 10</div>
-            <div class="chip" data-year="11">Year 11</div>
-            <div class="chip" data-year="12">Year 12</div>
-          </div>
-
-          <div class="q-list" id="q-list"><!-- injected --></div>
-        </div>
-
-        <!-- sidebar -->
-        <aside style="display:flex;flex-direction:column;gap:20px">
-          <div class="card side-card reveal">
-            <h4>Top helpers</h4>
-            <div class="side-list">
-              <div class="si"><span class="avatar">MO</span><div><div class="t">Mr. Okafor</div><div class="s">Chemistry · 312 answers</div></div></div>
-              <div class="si"><span class="avatar">AS</span><div><div class="t">Aarav S.</div><div class="s">Mathematics · 148 answers</div></div></div>
-              <div class="si"><span class="avatar">GB</span><div><div class="t">Ms. Bennett</div><div class="s">History · 121 answers</div></div></div>
-            </div>
-          </div>
-          <div class="card side-card reveal">
-            <h4>How it works</h4>
-            <div class="side-list">
-              <div class="si"><span class="ic num">1</span><div><div class="t">Ask clearly</div><div class="s">A good title gets faster answers.</div></div></div>
-              <div class="si"><span class="ic num">2</span><div><div class="t">Upvote what helps</div><div class="s">Surface the best explanations.</div></div></div>
-              <div class="si"><span class="ic num">3</span><div><div class="t">Pay it forward</div><div class="s">Answer one, learn twice.</div></div></div>
-            </div>
-          </div>
-          <div class="card side-card reveal" style="background:linear-gradient(135deg,rgba(23,72,176,.22),rgba(201,168,92,.1))">
-            <h4>Be a gentleman</h4>
-            <p style="color:var(--text-muted);font-size:.9rem">This is a respectful space in the spirit of Knox brotherhood. No question is too small — we learn together.</p>
-          </div>
-        </aside>
-      </div>
+      <div class="subject-grid" id="subject-grid"><!-- injected --></div>
     </div>
   </section>
 
   <div id="footer-mount"></div>
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/forum.js"></script>
+  <script src="assets/js/resources-data.js"></script>
+  <script src="assets/js/forum-data.js"></script>
+  <script src="assets/js/subject-icons.js"></script>
+  <script>
+    const subjectsForYear = y => (window.KNOX_SUBJECTS_BY_YEAR && window.KNOX_SUBJECTS_BY_YEAR[y]) || [];
+    const streamsFor = (subj, y) => (window.KNOX_STREAMS && window.KNOX_STREAMS[subj] && window.KNOX_STREAMS[subj][y]) || [];
+    const QUESTIONS = window.loadForumQuestions();
+
+    function subjectItems(y){
+      const items = [];
+      subjectsForYear(y).forEach(s => {
+        const streams = streamsFor(s, y);
+        if (streams.length){
+          streams.forEach(l => items.push({ subj:s, level:l, label: l.indexOf(s)===0 ? l : s+' '+l, val: s+'|'+l }));
+        } else {
+          items.push({ subj:s, label:s, val:s });
+        }
+      });
+      return items;
+    }
+    function countFor(it, y){
+      return QUESTIONS.filter(q => q.year===y && q.subject===it.subj && (!it.level || q.level===it.level)).length;
+    }
+
+    let selYear = 7;
+    function render(){
+      const grid = document.getElementById('subject-grid');
+      grid.innerHTML = subjectItems(selYear).map((it, i) => {
+        const n = countFor(it, selYear);
+        const href = 'forum-board.html?year=' + selYear + '&subject=' + encodeURIComponent(it.val);
+        const photo = window.KNOX_PHOTO(it.subj, it.level);
+        return `<a class="subject-card" href="${href}" data-href="${href}" style="--i:${i}">
+          ${photo ? `<span class="sc-photo"><img src="${photo}" alt="" loading="lazy" onload="this.closest('.sc-photo').classList.add('in')" onerror="this.closest('.sc-photo').remove()"></span>` : ''}
+          <span class="sc-icon">${window.KNOX_ICON(it.subj, it.level)}</span>
+          <span class="sc-name">${it.label}</span>
+          <span class="sc-count">${n} question${n===1?'':'s'}</span>
+          <span class="sc-go" aria-hidden="true">→</span>
+        </a>`;
+      }).join('');
+      grid.querySelectorAll('.subject-card').forEach(card => {
+        card.addEventListener('click', e => {
+          if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          e.preventDefault();
+          grid.querySelectorAll('.subject-card').forEach(c => c !== card && c.classList.add('dim'));
+          card.classList.add('picked');
+          document.body.classList.add('page-leave');
+          setTimeout(() => { location.href = card.dataset.href; }, 380);
+        });
+      });
+    }
+    function selectYear(y, push){
+      selYear = y;
+      document.querySelectorAll('#year-tabs [data-year]').forEach(x => x.classList.toggle('active', parseInt(x.dataset.year,10)===y));
+      document.getElementById('forum-title').textContent = 'Year ' + y + ' forums';
+      render();
+      if (push) history.replaceState(null, '', 'forum.html?year=' + y);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('#year-tabs [data-year]').forEach(b => b.onclick = () => selectYear(parseInt(b.dataset.year,10), true));
+      const qy = new URLSearchParams(location.search).get('year');
+      selectYear(qy && /^(7|8|9|10|11|12)$/.test(qy) ? parseInt(qy,10) : 7, false);
+    });
+  </script>
 </body>
 </html>
