@@ -7,7 +7,7 @@ Takes about 5 minutes.
 ## 1. Create the sheet
 1. Go to <https://sheets.google.com> and create a new spreadsheet (call it e.g. *Knox Suggestions*).
 2. Rename the first tab to **Suggestions** (bottom-left).
-3. In row 1, add headers: `Received | Title | Details | Name | Submitted | Page`.
+3. In row 1, add headers: `Received | Title | Details | Name | Submitted`.
 
 ## 2. Add the script
 1. In the sheet: **Extensions → Apps Script**.
@@ -21,7 +21,7 @@ function doPost(e) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName('Suggestions') || ss.insertSheet('Suggestions');
     var p = (e && e.parameter) || {};
-    sheet.appendRow([ new Date(), p.title || '', p.text || '', p.name || '', p.time || '', p.page || '' ]);
+    sheet.appendRow([ new Date(), p.title || '', p.text || '', p.name || '', p.time || '' ]);
     return ContentService.createTextOutput('ok');
   } finally {
     lock.releaseLock();
@@ -42,11 +42,11 @@ function doPost(e) {
 1. Open `suggestions.html`.
 2. Find this line near the top of the `<script>`:
    ```js
-   const SHEET_ENDPOINT = '';
+   const FORM_ENDPOINT = '';
    ```
 3. Paste your URL inside the quotes:
    ```js
-   const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfyc.../exec';
+   const FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfyc.../exec';
    ```
 4. Commit and push. Done — new ideas now appear as rows in your sheet.
 

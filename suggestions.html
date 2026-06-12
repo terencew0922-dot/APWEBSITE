@@ -81,13 +81,13 @@
     const SG_VOTE_KEY = 'knox_sg_votes_v1';
     const h = n => Date.now() - 1000 * 60 * 60 * n;
 
-    // Paste your Google Apps Script Web App URL between the quotes to collect
-    // every submitted idea in a Google Sheet. Setup steps: SUGGESTIONS_SETUP.md
-    const SHEET_ENDPOINT = '';
-    function sendToSheet(payload) {
-      if (!SHEET_ENDPOINT) return;
+    // Where submitted ideas are delivered (Formspree, FormSubmit, or a Google
+    // Apps Script Web App). Paste your endpoint here. See SUGGESTIONS_SETUP.md
+    const FORM_ENDPOINT = '';
+    function sendIdea(payload) {
+      if (!FORM_ENDPOINT) return;
       try {
-        fetch(SHEET_ENDPOINT, {
+        fetch(FORM_ENDPOINT, {
           method: 'POST', mode: 'no-cors',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(payload).toString()
@@ -151,7 +151,7 @@
         const name = document.getElementById('sg-name').value.trim() || 'Anonymous';
         items.unshift({ id:'sg'+Date.now(), title, text, author:name, votes:1, time:Date.now() });
         save(items);
-        sendToSheet({ title, text, name, time: new Date().toISOString(), page: location.href });
+        sendIdea({ _subject: 'New website suggestion', title, text, name: name, time: new Date().toISOString() });
         e.target.reset();
         sort = 'new';
         document.querySelectorAll('[data-sort]').forEach(c=>c.classList.toggle('active', c.dataset.sort==='new'));
