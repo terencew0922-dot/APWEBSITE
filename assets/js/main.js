@@ -70,7 +70,7 @@ function navHTML(active) {
     <div class="container nav-inner">
       <a href="index.html" class="brand">
         <span class="logo"><img src="assets/img/knox-logo.svg" alt="Knox Grammar crest" /></span>
-        <div><b>Knox Grammar School</b><span>Learning Hub</span></div>
+        <div><b>Knox Grammar School</b><span>Academic Portfolio Website</span></div>
       </a>
       <div class="nav-links">
         ${link('index.html','Home')}
@@ -94,7 +94,7 @@ function footerHTML() {
         <div class="footer-brand">
           <a href="index.html" class="brand">
             <span class="logo"><img src="assets/img/knox-logo.svg" alt="Knox Grammar crest" /></span>
-            <div><b>Knox Grammar School</b><span>Learning Hub</span></div>
+            <div><b>Knox Grammar School</b><span>Academic Portfolio Website</span></div>
           </a>
           <p>A community of curious young men learning boldly, asking freely, and growing together since 1924. Wahroonga, Sydney.</p>
           <p class="motto">Virile Agitur — “Play the man.”</p>

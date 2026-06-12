@@ -1,4 +1,4 @@
-# Knox Grammar School — Learning Hub
+# Knox Grammar School — Academic Portfolio Website
 
 A modern, visually engaging website concept for **Knox Grammar School** (Wahroonga, Sydney —
 est. 1924, motto *Virile Agitur*). Pure HTML/CSS/JS, no build step — open `index.html` in a browser.
