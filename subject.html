@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subject · Knox Grammar School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/knox-logo.svg" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body class="page-enter">
+  <div class="bg-aura"></div>
+  <div class="bg-grid"></div>
+  <div id="nav-mount" data-active="subjects.html"></div>
+
+  <header class="subject-hero">
+    <span class="subject-photo" id="subject-photo"></span>
+    <div class="container">
+      <a class="subject-back" id="back-link" href="subjects.html">← <span>Back to subjects</span></a>
+      <div class="subject-head">
+        <span class="subject-emblem" id="subject-emblem"></span>
+        <div>
+          <span class="eyebrow"><span class="dot"></span> <span id="subject-year">Year</span></span>
+          <h1 id="subject-name">Subject</h1>
+          <p id="subject-count">Materials &amp; resources</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:30px">
+    <div class="container">
+      <div class="res-grid" id="res-grid"><!-- injected --></div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/resources-data.js"></script>
+  <script src="assets/js/subject-icons.js"></script>
+  <script>
+    const typeColor = { 'Past Papers':'#2f6bff','Video Series':'#6a5cff','Revision Guide':'#38e1ff','Interactive':'#34e0a1','Notes':'#ffcf5c','Study Guide':'#2f6bff','Reading List':'#6a5cff','Atlas':'#38e1ff','Flashcards':'#34e0a1','Audio':'#ffcf5c','Tutorial':'#6a5cff','Templates':'#2f6bff','Toolkit':'#38e1ff' };
+    const typeColorOf = t => typeColor[t] || '#7db1ff';
+
+    const params = new URLSearchParams(location.search);
+    const year = parseInt(params.get('year'), 10);
+    const val = params.get('subject') || '';
+    const [subj, level] = val.split('|');
+    const label = level ? (level.indexOf(subj) === 0 ? level : subj + ' ' + level) : subj;
+
+    function cardHTML(r, i){
+      return `<article class="res-card" style="--i:${i}">
+        <div class="res-top">
+          <div class="r-icon">${(r.subj||'?')[0]}</div>
+          <span class="res-type" style="color:${typeColorOf(r.type)}">${r.type}</span>
+        </div>
+        <div class="res-body">
+          <h3>${r.title}</h3>
+          <p>${r.desc}</p>
+          <div class="res-foot">
+            <div class="res-tags"><span class="tag" style="color:var(--gold-soft);border-color:var(--border-strong)">Year ${r.year}</span>${r.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+            <button class="btn btn-ghost btn-sm" data-open="${r.title}">Open ↗</button>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.title = label + ' · Knox Grammar School';
+      document.getElementById('subject-emblem').innerHTML = window.KNOX_ICON(subj, level);
+      const photo = window.KNOX_PHOTO(subj, level);
+      if (photo) {
+        const ph = document.getElementById('subject-photo');
+        const img = new Image();
+        img.alt = ''; img.onload = () => ph.classList.add('in');
+        img.src = photo; ph.appendChild(img);
+      }
+      document.getElementById('subject-year').textContent = 'Year ' + year;
+      document.getElementById('subject-name').textContent = label;
+      document.getElementById('back-link').href = 'subjects.html?year=' + year;
+
+      const list = window.KNOX_RESOURCES.filter(r =>
+        r.year===year && r.subj===subj && (!level || r.level===level)
+      ).sort((a,b)=> a.title.localeCompare(b.title));
+
+      document.getElementById('subject-count').textContent =
+        list.length ? `${list.length} resource${list.length===1?'':'s'} available` : 'No resources uploaded yet';
+
+      const grid = document.getElementById('res-grid');
+      grid.innerHTML = list.length
+        ? list.map(cardHTML).join('')
+        : '<div class="card empty-state" style="grid-column:1/-1"><h3>Nothing here yet</h3><p>No resources have been added for this subject yet — check back soon.</p></div>';
+      grid.querySelectorAll('[data-open]').forEach(b => b.onclick = () => showToast('Opening “' + b.dataset.open + '”'));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subjects · Knox Grammar School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/knox-logo.svg" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body class="page-enter">
+  <div class="bg-aura"></div>
+  <div class="bg-grid"></div>
+  <div id="nav-mount" data-active="subjects.html"></div>
+
+  <header class="page-hero" style="padding-bottom:18px">
+    <div class="container">
+      <span class="eyebrow reveal in"><span class="dot"></span> <span id="year-eyebrow">Resource Library</span></span>
+      <h1 class="reveal in" id="year-title">Choose a subject</h1>
+      <p class="reveal in" id="year-sub">Select a subject to open its materials and resources.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:18px">
+    <div class="container">
+      <!-- year switcher tabs -->
+      <div class="tabs" id="year-tabs" style="margin-bottom:34px">
+        <button class="tab" data-year="7">Year 7</button>
+        <button class="tab" data-year="8">Year 8</button>
+        <button class="tab" data-year="9">Year 9</button>
+        <button class="tab" data-year="10">Year 10</button>
+        <button class="tab" data-year="11">Year 11</button>
+        <button class="tab" data-year="12">Year 12</button>
+      </div>
+
+      <div class="subject-grid" id="subject-grid"><!-- injected --></div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/resources-data.js"></script>
+  <script src="assets/js/subject-icons.js"></script>
+  <script>
+    const subjectsForYear = y => (window.KNOX_SUBJECTS_BY_YEAR && window.KNOX_SUBJECTS_BY_YEAR[y]) || [];
+    const streamsFor = (subj, y) => (window.KNOX_STREAMS && window.KNOX_STREAMS[subj] && window.KNOX_STREAMS[subj][y]) || [];
+
+    function subjectItems(y){
+      const items = [];
+      subjectsForYear(y).forEach(s => {
+        const streams = streamsFor(s, y);
+        if (streams.length){
+          streams.forEach(l => items.push({
+            subj: s, level: l,
+            label: l.indexOf(s) === 0 ? l : s + ' ' + l,
+            val: s + '|' + l
+          }));
+        } else {
+          items.push({ subj:s, label:s, val:s });
+        }
+      });
+      return items;
+    }
+
+    function countFor(it, y){
+      return window.KNOX_RESOURCES.filter(r =>
+        r.year===y && r.subj===it.subj && (!it.level || r.level===it.level)).length;
+    }
+
+    let selYear = 7;
+
+    function render(){
+      const grid = document.getElementById('subject-grid');
+      const items = subjectItems(selYear);
+      grid.innerHTML = items.map((it, i) => {
+        const n = countFor(it, selYear);
+        const href = 'subject.html?year=' + selYear + '&subject=' + encodeURIComponent(it.val);
+        const photo = window.KNOX_PHOTO(it.subj, it.level);
+        return `<a class="subject-card" href="${href}" data-href="${href}" style="--i:${i}">
+          ${photo ? `<span class="sc-photo"><img src="${photo}" alt="" loading="lazy" onload="this.closest('.sc-photo').classList.add('in')" onerror="this.closest('.sc-photo').remove()"></span>` : ''}
+          <span class="sc-icon">${window.KNOX_ICON(it.subj, it.level)}</span>
+          <span class="sc-name">${it.label}</span>
+          <span class="sc-count">${n} resource${n===1?'':'s'}</span>
+          <span class="sc-go" aria-hidden="true">→</span>
+        </a>`;
+      }).join('');
+      // animated click-through
+      grid.querySelectorAll('.subject-card').forEach(card => {
+        card.addEventListener('click', e => {
+          if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; // let it navigate normally
+          e.preventDefault();
+          grid.querySelectorAll('.subject-card').forEach(c => c !== card && c.classList.add('dim'));
+          card.classList.add('picked');
+          document.body.classList.add('page-leave');
+          setTimeout(() => { location.href = card.dataset.href; }, 380);
+        });
+      });
+    }
+
+    function selectYear(y, push){
+      selYear = y;
+      document.querySelectorAll('#year-tabs [data-year]').forEach(x => x.classList.toggle('active', parseInt(x.dataset.year,10)===y));
+      document.getElementById('year-eyebrow').textContent = 'Year ' + y;
+      document.getElementById('year-title').textContent = 'Year ' + y + ' subjects';
+      render();
+      if (push) history.replaceState(null, '', 'subjects.html?year=' + y);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('#year-tabs [data-year]').forEach(b => b.onclick = () => selectYear(parseInt(b.dataset.year,10), true));
+      const qy = new URLSearchParams(location.search).get('year');
+      selectYear(qy && /^(7|8|9|10|11|12)$/.test(qy) ? parseInt(qy,10) : 7, false);
+    });
+  </script>
+</body>
+</html>

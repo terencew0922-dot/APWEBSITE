@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Announcements · Knox Grammar School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/knox-logo.svg" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="bg-aura"></div>
+  <div class="bg-grid"></div>
+  <div id="nav-mount" data-active="announcements.html"></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <span class="eyebrow reveal in"><span class="dot"></span> Updated daily</span>
+      <h1 class="reveal in">School <span class="grad">Announcements</span></h1>
+      <p class="reveal in">Updates, deadlines and notices from across the School.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:30px">
+    <div class="container">
+      <div class="toolbar reveal">
+        <div class="chips" id="ann-filters">
+          <div class="chip active" data-cat="all">All</div>
+          <div class="chip" data-cat="urgent">Urgent</div>
+          <div class="chip" data-cat="academic">Academic</div>
+          <div class="chip" data-cat="event">Events</div>
+          <div class="chip" data-cat="sport">Sports</div>
+        </div>
+        <div class="search-box">
+          <span class="si-ic">🔍</span>
+          <input type="text" id="ann-search" placeholder="Search announcements..." />
+        </div>
+      </div>
+
+      <div class="ann-layout">
+        <div class="ann-feed" id="ann-feed"><!-- injected --></div>
+
+        <aside style="display:flex;flex-direction:column;gap:20px">
+          <div class="card side-card reveal">
+            <h4>Pinned</h4>
+            <div class="side-list">
+              <div class="si"><span class="ic">·</span><div><div class="t">Exam timetable live</div><div class="s">Check your schedule now</div></div></div>
+              <div class="si"><span class="ic">·</span><div><div class="t">Year 12 Valedictory: June 28</div><div class="s">RSVP closes June 20</div></div></div>
+              <div class="si"><span class="ic">·</span><div><div class="t">Macintyre Library hours</div><div class="s">Open till 8pm during exams</div></div></div>
+            </div>
+          </div>
+          <div class="card side-card reveal">
+            <h4>Subscribe</h4>
+            <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:14px">Get announcements delivered to your inbox.</p>
+            <form id="sub-form" class="field" style="margin:0">
+              <input type="email" placeholder="you@knox.nsw.edu.au" required style="margin-bottom:10px" />
+              <button class="btn btn-primary" style="width:100%" type="submit">Subscribe</button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="assets/js/main.js"></script>
+  <script>
+    const announcements = [
+      { d:'06', m:'Jun', cat:['urgent','academic'], title:'Semester examination timetable released', body:'Examinations begin June 16th. Personalised timetables and venue allocations are now available in the Resources hub. Please arrive 15 minutes early to each session.', tags:[['Urgent','urgent'],['Exams','academic']] },
+      { d:'04', m:'Jun', cat:['event','academic'], title:'Founder\'s Day &amp; centenary assembly — sign-ups open', body:'Mark 100 years of Knox tradition. Register by June 13th for the Founder\'s Day assembly and the Pipes &amp; Drums Highland march through the campus.', tags:[['Event','event'],['Heritage','academic']] },
+      { d:'02', m:'Jun', cat:['sport'], title:'1st XV secures the GPS derby', body:'A strong all-round performance from the 1st XV. Full match report and photos are on the Events page. Next fixture: Old Boys, Saturday 2pm at Knox Oval.', tags:[['Sport','sport']] },
+      { d:'30', m:'May', cat:['academic'], title:'Year 9 elective subject selections open', body:'Choose your 2027 electives via the Academic Portfolio Website. Information evening in the Great Hall on Wednesday during period 6. Speak with your Head of House for guidance.', tags:[['Academic','academic']] },
+      { d:'28', m:'May', cat:['event'], title:'Knox Music Soirée — tickets available', body:'Our orchestra, choir and pipe band present a full evening of music in the Performing Arts Centre. Tickets are free but must be reserved at Reception.', tags:[['Event','event']] },
+      { d:'25', m:'May', cat:['urgent'], title:'Early dismissal Thursday — staff conference', body:'School will close at 12:30pm this Thursday for professional learning. Co-curricular activities are cancelled; bus services are adjusted accordingly.', tags:[['Urgent','urgent']] },
+      { d:'22', m:'May', cat:['academic','event'], title:'Universities &amp; careers evening — Years 11 &amp; 12', body:'Meet representatives from leading universities and pathways providers. Doors open 6pm in the Great Hall.', tags:[['Careers','academic'],['Event','event']] },
+      { d:'19', m:'May', cat:['sport'], title:'Inter-house athletics carnival results', body:'A full day of House competition. Congratulations to the champion House. Full results and photos are on the Events page.', tags:[['Sport','sport']] }
+    ];
+
+    function pillClass(c){ return c; }
+    function render(list){
+      const feed = document.getElementById('ann-feed');
+      if(!list.length){ feed.innerHTML = '<div class="card empty-state"><h3>Nothing found</h3><p>Try a different filter or search term.</p></div>'; return; }
+      feed.innerHTML = list.map(a => `
+        <article class="ann-item reveal in">
+          <div class="ann-date"><div class="d">${a.d}</div><div class="m">${a.m}</div></div>
+          <div class="ann-body">
+            <h3>${a.title}</h3>
+            <p>${a.body}</p>
+            <div class="ann-meta">${a.tags.map(t=>`<span class="pill ${t[1]}">${t[0]}</span>`).join('')}</div>
+          </div>
+        </article>`).join('');
+    }
+
+    let cat='all', term='';
+    function apply(){
+      render(announcements.filter(a=>{
+        const mc = cat==='all' || a.cat.includes(cat);
+        const mt = !term || (a.title+a.body).toLowerCase().includes(term.toLowerCase());
+        return mc && mt;
+      }));
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+      apply();
+      document.querySelectorAll('#ann-filters .chip').forEach(c=>c.onclick=()=>{
+        document.querySelectorAll('#ann-filters .chip').forEach(x=>x.classList.remove('active'));
+        c.classList.add('active'); cat=c.dataset.cat; apply();
+      });
+      document.getElementById('ann-search').oninput = e=>{ term=e.target.value; apply(); };
+      document.getElementById('sub-form').onsubmit = e=>{ e.preventDefault(); e.target.reset(); showToast('Subscribed.'); };
+    });
+  </script>
+</body>
+</html>
