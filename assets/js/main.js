@@ -78,6 +78,7 @@ function navHTML(active) {
         ${link('subjects.html','Resources')}
         ${link('forum.html','Q&amp;A Forum')}
         ${link('events.html','Events')}
+        ${link('suggestions.html','Suggestions')}
         <a href="forum.html" class="nav-cta">Ask a Question</a>
       </div>
       <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -120,7 +121,7 @@ function footerHTML() {
           <ul>
             <li><a href="forum.html">Ask a Teacher</a></li>
             <li><a href="mailto:enquiries@knox.nsw.edu.au">Wellbeing</a></li>
-            <li><a href="forum.html">Academic Help</a></li>
+            <li><a href="suggestions.html">Suggest a feature</a></li>
             <li><a href="subjects.html">Study Tips</a></li>
           </ul>
         </div>

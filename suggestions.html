@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suggestions · Knox Grammar School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/knox-logo.svg" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body class="page-enter">
+  <div class="bg-aura"></div>
+  <div class="bg-grid"></div>
+  <div id="nav-mount" data-active="suggestions.html"></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <span class="eyebrow reveal in"><span class="dot"></span> Help shape the site</span>
+      <h1 class="reveal in">Suggestions <span class="grad">&amp; ideas</span></h1>
+      <p class="reveal in">Tell us what you'd like added to the website. Upvote the ideas you like — the most popular rise to the top, and we read every one.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:24px">
+    <div class="container">
+      <div class="forum-layout">
+        <div>
+          <div class="card ask-box reveal">
+            <h3>Suggest something</h3>
+            <form id="sg-form">
+              <div class="field">
+                <label for="sg-title">Your idea</label>
+                <input type="text" id="sg-title" placeholder="e.g. Add a dark / light mode toggle" required maxlength="120" />
+              </div>
+              <div class="field">
+                <label for="sg-detail">Details (optional)</label>
+                <textarea id="sg-detail" rows="3" placeholder="Explain what it would do and why it would help..." maxlength="600"></textarea>
+              </div>
+              <div class="field">
+                <label for="sg-name">Your name (optional)</label>
+                <input type="text" id="sg-name" placeholder="Anonymous" maxlength="40" />
+              </div>
+              <button class="btn btn-primary" type="submit" style="width:100%">Submit idea</button>
+            </form>
+          </div>
+
+          <div class="toolbar reveal">
+            <div class="chips">
+              <div class="chip active" data-sort="votes">Most wanted</div>
+              <div class="chip" data-sort="new">Newest</div>
+            </div>
+            <span style="color:var(--text-dim);font-size:.85rem;text-transform:uppercase;letter-spacing:1px"><span id="sg-count">0</span> ideas</span>
+          </div>
+
+          <div class="q-list" id="sg-list"><!-- injected --></div>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:20px">
+          <div class="card side-card reveal">
+            <h4>How it works</h4>
+            <div class="side-list">
+              <div class="si"><span class="ic num">1</span><div><div class="t">Post an idea</div><div class="s">Anything you'd like added or improved.</div></div></div>
+              <div class="si"><span class="ic num">2</span><div><div class="t">Upvote favourites</div><div class="s">The most wanted ideas rise to the top.</div></div></div>
+              <div class="si"><span class="ic num">3</span><div><div class="t">We review them</div><div class="s">Good ideas get built into the site.</div></div></div>
+            </div>
+          </div>
+          <div class="card side-card reveal" style="background:linear-gradient(135deg,rgba(23,72,176,.22),rgba(201,168,92,.1))">
+            <h4>Keep it constructive</h4>
+            <p style="color:var(--text-muted);font-size:.9rem">Be specific and kind. Clear, well-explained ideas are the easiest to build.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="assets/js/main.js"></script>
+  <script>
+    const SG_KEY = 'knox_suggestions_v1';
+    const SG_VOTE_KEY = 'knox_sg_votes_v1';
+    const h = n => Date.now() - 1000 * 60 * 60 * n;
+
+    const SEED = [
+      { id:'sg1', title:'Dark / light mode toggle', text:'A button to switch between the dark theme and a lighter daytime theme.', author:'Year 10 student', votes:14, time:h(30) },
+      { id:'sg2', title:'Add past exam papers for every subject', text:'It would be great to have a few years of past papers in each subject board.', author:'Year 12 student', votes:21, time:h(54) },
+      { id:'sg3', title:'Export events to my calendar', text:'A button on each event to add it straight to Google / Apple calendar.', author:'Parent', votes:8, time:h(8) }
+    ];
+
+    function load(){ try { const r = localStorage.getItem(SG_KEY); if (r) return JSON.parse(r); } catch(e){} localStorage.setItem(SG_KEY, JSON.stringify(SEED)); return JSON.parse(JSON.stringify(SEED)); }
+    function save(d){ localStorage.setItem(SG_KEY, JSON.stringify(d)); }
+    function getVotes(){ try { return JSON.parse(localStorage.getItem(SG_VOTE_KEY)) || {}; } catch(e){ return {}; } }
+    function setVotes(v){ localStorage.setItem(SG_VOTE_KEY, JSON.stringify(v)); }
+    function esc(s){ const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    function initials(n){ return n.split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+    function timeAgo(ts){ const s=Math.floor((Date.now()-ts)/1000); if(s<60)return'just now'; const m=Math.floor(s/60); if(m<60)return m+'m ago'; const hh=Math.floor(m/60); if(hh<24)return hh+'h ago'; const d=Math.floor(hh/24); return d===1?'yesterday':d+'d ago'; }
+
+    let items = [], sort = 'votes';
+
+    function render(){
+      const list = document.getElementById('sg-list');
+      const votes = getVotes();
+      document.getElementById('sg-count').textContent = items.length;
+      const view = items.slice().sort((a,b)=> sort==='votes' ? b.votes-a.votes : b.time-a.time);
+      if (!view.length){ list.innerHTML = '<div class="card empty-state"><h3>No ideas yet</h3><p>Be the first to suggest something.</p></div>'; return; }
+      list.innerHTML = view.map(s => `
+        <article class="card q-card">
+          <div class="q-votes">
+            <button class="vote-btn ${votes[s.id]?'voted':''}" data-vote="${s.id}" aria-label="Upvote">▲</button>
+            <span class="count">${s.votes}</span>
+            <span class="lbl">votes</span>
+          </div>
+          <div class="q-main">
+            <span class="pill academic">Idea</span>
+            <h3 style="margin-top:8px">${esc(s.title)}</h3>
+            ${s.text ? `<p class="q-text">${esc(s.text)}</p>` : ''}
+            <div class="q-foot">
+              <span class="q-author"><span class="avatar">${esc(initials(s.author||'A'))}</span> ${esc(s.author||'Anonymous')}</span>
+              <span>· ${timeAgo(s.time)}</span>
+            </div>
+          </div>
+        </article>`).join('');
+      list.querySelectorAll('[data-vote]').forEach(btn => btn.onclick = () => {
+        const id = btn.dataset.vote, v = getVotes(), it = items.find(x=>x.id===id);
+        if (v[id]) { it.votes--; delete v[id]; } else { it.votes++; v[id]=true; showToast('Thanks for the vote.'); }
+        setVotes(v); save(items); render();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      items = load(); render();
+      document.getElementById('sg-form').onsubmit = e => {
+        e.preventDefault();
+        const title = document.getElementById('sg-title').value.trim();
+        if (!title) return;
+        const text = document.getElementById('sg-detail').value.trim();
+        const name = document.getElementById('sg-name').value.trim() || 'Anonymous';
+        items.unshift({ id:'sg'+Date.now(), title, text, author:name, votes:1, time:Date.now() });
+        save(items); e.target.reset();
+        sort = 'new';
+        document.querySelectorAll('[data-sort]').forEach(c=>c.classList.toggle('active', c.dataset.sort==='new'));
+        render();
+        showToast('Idea submitted — thank you!');
+        document.getElementById('sg-list').scrollIntoView({ behavior:'smooth' });
+      };
+      document.querySelectorAll('[data-sort]').forEach(c => c.onclick = () => {
+        document.querySelectorAll('[data-sort]').forEach(x=>x.classList.remove('active'));
+        c.classList.add('active'); sort = c.dataset.sort; render();
+      });
+    });
+  </script>
+</body>
+</html>
