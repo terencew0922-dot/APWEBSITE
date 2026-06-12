@@ -18,7 +18,6 @@ thistle, and the *Virile Agitur* motto banner).
 | `subject.html` | **Subject page** — materials/resources for one subject (`?year=N&subject=X`) |
 | `announcements.html` | **Announcements** — filterable school news feed |
 | `events.html` | **Events** — timeline + interactive calendar + co-curricular + RSVP |
-| `about.html` | About / ethos / values / leadership / contact |
 
 ## Structure
 ```

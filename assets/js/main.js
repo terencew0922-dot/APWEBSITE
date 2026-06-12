@@ -78,7 +78,6 @@ function navHTML(active) {
         ${link('subjects.html','Resources')}
         ${link('forum.html','Q&amp;A Forum')}
         ${link('events.html','Events')}
-        ${link('about.html','About')}
         <a href="forum.html" class="nav-cta">Ask a Question</a>
       </div>
       <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -113,16 +112,15 @@ function footerHTML() {
           <ul>
             <li><a href="announcements.html">Announcements</a></li>
             <li><a href="events.html">Calendar</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="about.html#contact">Contact</a></li>
+            <li><a href="mailto:enquiries@knox.nsw.edu.au">Contact</a></li>
           </ul>
         </div>
         <div>
           <h5>Support</h5>
           <ul>
             <li><a href="forum.html">Ask a Teacher</a></li>
-            <li><a href="about.html#contact">Wellbeing</a></li>
-            <li><a href="about.html">Academic Help</a></li>
+            <li><a href="mailto:enquiries@knox.nsw.edu.au">Wellbeing</a></li>
+            <li><a href="forum.html">Academic Help</a></li>
             <li><a href="subjects.html">Study Tips</a></li>
           </ul>
         </div>
